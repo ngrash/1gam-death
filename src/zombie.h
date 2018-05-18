@@ -3,7 +3,6 @@
 
 #include "character.h"
 #include "resources.h"
-#include "sprite.h"
 
 class Zombie : public Character {
   public:

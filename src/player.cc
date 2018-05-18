@@ -4,10 +4,7 @@
 
 Player::Player(Resources& resources) :
   velocityFactor_(0),
-  resources_(resources),
-  current_frame_duration_(0),
-  current_frame_(0),
-  num_frames_(0)
+  resources_(resources)
 {
   animation_->frame_duration = 0.25;
   animation_->texture = resources_.GetTexture(Texture::PLAYER_IDLE);

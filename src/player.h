@@ -3,7 +3,6 @@
 
 #include "character.h"
 #include "resources.h"
-#include "sprite.h"
 
 class Player : public Character {
   public:
@@ -13,9 +12,6 @@ class Player : public Character {
 
   private:
     Resources& resources_;
-    int num_frames_;
-    int current_frame_;
-    float current_frame_duration_;
     float velocityFactor_;
 };
 
