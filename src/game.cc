@@ -171,7 +171,7 @@ void Game::HandleInput() {
 void Game::Render(Graphics& graphics) {
   graphics.BeginRender();
 
-  graphics.RenderSprite(player_->GetSprite(), player_->x_, player_->y_);
+  graphics.RenderSprite(player_->GetSprite(), player_->GetX(), player_->GetY());
   graphics.RenderSprite(zombie_->GetSprite(), zombie_->GetX(), zombie_->GetY());
 
   graphics.RenderText("DEATH", 65, 30);

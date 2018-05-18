@@ -10,6 +10,7 @@ enum class Texture {
   PLAYER_IDLE,
   PLAYER_WALKING,
   ZOMBIE_IDLE,
+  ZOMBIE_WALKING,
   _LAST_ELEMENT_
 };
 

@@ -1,22 +1,14 @@
 #ifndef ZOMBIE_H_
 #define ZOMBIE_H_
 
-#include "sprite.h"
+#include "character.h"
 #include "resources.h"
+#include "sprite.h"
 
-class Zombie {
+class Zombie : public Character {
   public:
     Zombie(Resources& resources);
-    ~Zombie();
-    Sprite* GetSprite();
-    int GetX();
-    int GetY();
     void Update(float seconds_elapsed);
-
-  private:
-    Sprite* sprite_;
-    int x_;
-    int y_;
 };
 
 #endif // ZOMBIE_H_

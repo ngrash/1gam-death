@@ -20,6 +20,9 @@ SDL_Texture *Resources::LoadTexture(Texture texture) {
     case Texture::ZOMBIE_IDLE:
       tex = LoadTexture("assets/zombie_idle.png");
       break;
+    case Texture::ZOMBIE_WALKING:
+      tex = LoadTexture("assets/zombie_walking.png");
+      break;
   }
 
   return tex;
