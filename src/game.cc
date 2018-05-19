@@ -6,8 +6,10 @@
 #define WINDOW_TITLE "DEATH - 65th #1GAM May 2018"
 #define WINDOW_X SDL_WINDOWPOS_CENTERED
 #define WINDOW_Y SDL_WINDOWPOS_CENTERED
-#define WINDOW_WIDTH 160 * GAME_SCALE
-#define WINDOW_HEIGHT 144 * GAME_SCALE
+#define SCREEN_WIDTH 160
+#define SCREEN_HEIGHT 144
+#define WINDOW_WIDTH SCREEN_WIDTH * GAME_SCALE
+#define WINDOW_HEIGHT SCREEN_HEIGHT * GAME_SCALE
 
 #define RENDERING_DEVICE_INDEX -1
 
@@ -171,10 +173,31 @@ void Game::HandleInput() {
 void Game::Render(Graphics& graphics) {
   graphics.BeginRender();
 
-  graphics.RenderSprite(player_->GetSprite(), player_->GetX(), player_->GetY());
-  graphics.RenderSprite(zombie_->GetSprite(), zombie_->GetX(), zombie_->GetY());
+  RenderCharacter(graphics, *player_, 0, 0);
+  RenderCharacter(graphics, *zombie_, 0, 0);
 
   graphics.RenderText("DEATH", 65, 30);
 
   graphics.EndRender();
+}
+
+/**
+ * This method renders a character on the screen.
+ *
+ * Characters use world coordinates where (0,0) is bottom left of the world.
+ * Render methods use screen coordinates where (0,0) is the top left of the screen.
+ * The camera uses world coordinates to indicate where we are looking on the world.
+ */
+void Game::RenderCharacter(Graphics& g, Character& character, float camX, float camY) {
+  Sprite* sprite = character.GetSprite();
+  float x = character.GetX();
+  float y = character.GetY();
+
+  float relCamX = x - camX;
+  float relCamY = y - camY;
+
+  float screenX = relCamX;
+  float screenY = SCREEN_HEIGHT - relCamY - sprite->src_rect.h;
+
+  g.RenderSprite(sprite, screenX, screenY);
 }

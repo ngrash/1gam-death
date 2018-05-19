@@ -6,11 +6,11 @@ Player::Player(Resources& resources) :
   velocityFactor_(0),
   resources_(resources)
 {
-  animation_->frame_duration = 0.25;
+  animation_->frame_duration = 0.10;
   animation_->texture = resources_.GetTexture(Texture::PLAYER_IDLE);
 
-  x_ = 50;
-  y_ = 70;
+  x_ = 40;
+  y_ = 50;
 }
 
 void Player::SetVelocity(float factor) {

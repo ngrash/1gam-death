@@ -16,7 +16,7 @@ Zombie::Zombie(Player& player, Resources& resources) :
   animation_->num_frames = 4;
 
   x_ = 90;
-  y_ = 70;
+  y_ = 50;
 }
 
 void Zombie::Update(float seconds_elapsed) {
