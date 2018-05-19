@@ -66,7 +66,7 @@ bool Game::Init() {
   graphics_ = new Graphics(*renderer_);
 
   player_ = new Player(*resources_);
-  zombie_ = new Zombie(*resources_);
+  zombie_ = new Zombie(*player_, *resources_);
 
   logDebug("Game::Init() successful");
 
