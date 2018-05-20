@@ -10,6 +10,7 @@ class Player : public Character {
     Player(Resources& resources);
     void Update(float seconds_elapsed);
     void SetVelocityXFactor(float factor);
+    void Jump();
 
   private:
     Resources& resources_;

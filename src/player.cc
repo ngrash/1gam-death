@@ -1,6 +1,8 @@
 #include "player.h"
 
 #define MAX_PLAYER_VELOCITY_X 50
+#define MAX_PLAYER_VELOCITY_Y 50
+#define FLOOR_Y 50
 
 Player::Player(Resources& resources) :
   velocity_x_factor_(0),
@@ -10,7 +12,7 @@ Player::Player(Resources& resources) :
   animation_->texture = resources_.GetTexture(Texture::PLAYER_IDLE);
 
   position_.x = 40;
-  position_.y = 50;
+  position_.y = FLOOR_Y;
 }
 
 void Player::SetVelocityXFactor(float factor) {
@@ -36,6 +38,13 @@ void Player::SetVelocityXFactor(float factor) {
   }
 }
 
+void Player::Jump() {
+  if(position_.y == FLOOR_Y) {
+    velocity_.y = 200;
+    acceleration_.y = -700;
+  }
+}
+
 void Player::Update(float seconds_elapsed) {
   animation_->Update(seconds_elapsed);
 
@@ -44,4 +53,10 @@ void Player::Update(float seconds_elapsed) {
 
   position_.x += velocity_.x * seconds_elapsed;
   position_.y += velocity_.y * seconds_elapsed;
+
+  if(position_.y < FLOOR_Y) {
+    position_.y = FLOOR_Y;
+    velocity_.y = 0;
+    acceleration_.y = 0;
+  }
 }

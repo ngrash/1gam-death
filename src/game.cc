@@ -152,7 +152,9 @@ void Game::HandleInput() {
             }
             break;
           case SDLK_j:
-            // TODO: Jump
+            if(!event.key.repeat) {
+              player_->Jump();
+            }
             break;
         }
         break;
