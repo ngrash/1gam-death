@@ -3,6 +3,7 @@
 
 #include "animation.h"
 #include "sprite.h"
+#include "vector2f.h"
 
 class Character {
   public:
@@ -10,12 +11,12 @@ class Character {
     ~Character();
     Sprite* GetSprite();
     virtual void Update(float seconds_elapsed) = 0;
-    float GetX();
-    float GetY();
+    Vector2f GetPosition();
   protected:
     Animation* animation_;
-    float x_;
-    float y_;
+    Vector2f position_;
+    Vector2f acceleration_;
+    Vector2f velocity_;
 };
 
 #endif // CHARACTER_H_

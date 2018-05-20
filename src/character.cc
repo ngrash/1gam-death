@@ -12,10 +12,6 @@ Sprite* Character::GetSprite() {
   return animation_;
 }
 
-float Character::GetX() {
-  return x_;
-}
-
-float Character::GetY() {
-  return y_;
+Vector2f Character::GetPosition() {
+  return position_;
 }

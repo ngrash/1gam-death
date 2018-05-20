@@ -2,10 +2,10 @@
 
 #include <cmath>
 
-#include "animation.h"
+#include "vector2f.h"
 
-#define ZOMBIE_SPEED 10
-#define DESIRED_DISTANCE 6
+#define MAX_ZOMBIE_VELOCITY_X 10
+#define DESIRED_DISTANCE_TO_PLAYER 6
 
 Zombie::Zombie(Player& player, Resources& resources) :
   player_(player),
@@ -15,27 +15,28 @@ Zombie::Zombie(Player& player, Resources& resources) :
   animation_->texture = resources_.GetTexture(Texture::ZOMBIE_WALKING);
   animation_->num_frames = 4;
 
-  x_ = 90;
-  y_ = 50;
+  position_.x = 90;
+  position_.y = 50;
 }
 
 void Zombie::Update(float seconds_elapsed) {
   animation_->Update(seconds_elapsed);
 
-  float velocityX = 0;
-  if(player_.GetX() > x_) {
+  Vector2f player_pos = player_.GetPosition();
+
+  if(player_pos.x > position_.x) {
     animation_->render_flip = SDL_FLIP_NONE;
-    velocityX = 1.0;
+    velocity_.x = MAX_ZOMBIE_VELOCITY_X;
   }
-  else if(player_.GetX() < x_) {
+  else if(player_pos.y < position_.x) {
     animation_->render_flip = SDL_FLIP_HORIZONTAL;
-    velocityX = -1.0;
+    velocity_.x = -MAX_ZOMBIE_VELOCITY_X;
   }
 
-  float distanceToPlayer = abs(player_.GetX() - x_);
-  bool reachedPlayer = distanceToPlayer <= DESIRED_DISTANCE;
+  float distance_to_player = abs(player_pos.x - position_.x);
+  bool reached_player = distance_to_player <= DESIRED_DISTANCE_TO_PLAYER;
 
-  if(reachedPlayer) {
+  if(reached_player) {
       animation_->texture = resources_.GetTexture(Texture::ZOMBIE_IDLE);
       animation_->num_frames = 0;
       animation_->Reset();
@@ -43,6 +44,6 @@ void Zombie::Update(float seconds_elapsed) {
       animation_->texture = resources_.GetTexture(Texture::ZOMBIE_WALKING);
       animation_->num_frames = 4;
 
-      x_ += ZOMBIE_SPEED * velocityX * seconds_elapsed;
+      position_.x += velocity_.x * seconds_elapsed;
   }
 }

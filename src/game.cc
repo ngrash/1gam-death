@@ -2,6 +2,7 @@
 
 #include "SDL2/SDL_image.h"
 #include "logging.h"
+#include "vector2f.h"
 
 #define WINDOW_TITLE "DEATH - 65th #1GAM May 2018"
 #define WINDOW_X SDL_WINDOWPOS_CENTERED
@@ -117,7 +118,7 @@ void Game::Run() {
 }
 
 void Game::Update(float seconds_elapsed) {
-  player_->SetVelocity(playerVelocityX_);
+  player_->SetVelocityXFactor(playerVelocityX_);
 
   player_->Update(seconds_elapsed);
   zombie_->Update(seconds_elapsed);
@@ -149,6 +150,9 @@ void Game::HandleInput() {
             if(!event.key.repeat) {
               playerVelocityX_ += 1;
             }
+            break;
+          case SDLK_j:
+            // TODO: Jump
             break;
         }
         break;
@@ -190,11 +194,9 @@ void Game::Render(Graphics& graphics) {
  */
 void Game::RenderCharacter(Graphics& g, Character& character, float camX, float camY) {
   Sprite* sprite = character.GetSprite();
-  float x = character.GetX();
-  float y = character.GetY();
-
-  float relCamX = x - camX;
-  float relCamY = y - camY;
+  Vector2f position = character.GetPosition();
+  float relCamX = position.x - camX;
+  float relCamY = position.y - camY;
 
   float screenX = relCamX;
   float screenY = SCREEN_HEIGHT - relCamY - sprite->src_rect.h;

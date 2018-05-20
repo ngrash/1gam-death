@@ -3,16 +3,18 @@
 
 #include "character.h"
 #include "resources.h"
+#include "vector2f.h"
 
 class Player : public Character {
   public:
     Player(Resources& resources);
     void Update(float seconds_elapsed);
-    void SetVelocity(float factor);
+    void SetVelocityXFactor(float factor);
 
   private:
     Resources& resources_;
-    float velocityFactor_;
+
+    float velocity_x_factor_;
 };
 
 #endif // PLAYER_H_

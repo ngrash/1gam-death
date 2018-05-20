@@ -1,21 +1,23 @@
 #include "player.h"
 
-#define PLAYER_SPEED 50
+#define MAX_PLAYER_VELOCITY_X 50
 
 Player::Player(Resources& resources) :
-  velocityFactor_(0),
+  velocity_x_factor_(0),
   resources_(resources)
 {
   animation_->frame_duration = 0.10;
   animation_->texture = resources_.GetTexture(Texture::PLAYER_IDLE);
 
-  x_ = 40;
-  y_ = 50;
+  position_.x = 40;
+  position_.y = 50;
 }
 
-void Player::SetVelocity(float factor) {
-  if(factor != velocityFactor_) {
-    velocityFactor_ = factor;
+void Player::SetVelocityXFactor(float factor) {
+  if(velocity_x_factor_ != factor) {
+    velocity_x_factor_ = factor;
+
+    velocity_.x = MAX_PLAYER_VELOCITY_X * factor;
 
     animation_->Reset();
 
@@ -37,5 +39,9 @@ void Player::SetVelocity(float factor) {
 void Player::Update(float seconds_elapsed) {
   animation_->Update(seconds_elapsed);
 
-  x_ += PLAYER_SPEED * velocityFactor_ * seconds_elapsed;
+  velocity_.x += acceleration_.x * seconds_elapsed;
+  velocity_.y += acceleration_.y * seconds_elapsed;
+
+  position_.x += velocity_.x * seconds_elapsed;
+  position_.y += velocity_.y * seconds_elapsed;
 }
