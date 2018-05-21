@@ -5,6 +5,7 @@
 #include "graphics.h"
 #include "player.h"
 #include "resources.h"
+#include "vector2f.h"
 #include "zombie.h"
 
 class Game {
@@ -25,13 +26,15 @@ class Game {
     Zombie* zombie_;
     int playerVelocityX_;
     Sprite* level_;
+    int level_width_;
+    Vector2f camera_;
 
     void HandleInput();
     void Update(float seconds_elapsed);
     void Render(Graphics& graphics);
 
-    void RenderCharacter(Graphics& g, Character& character, float camX, float camY);
-    void RenderSprite(Graphics& g, Sprite* sprite, float x, float y, float camX, float camY);
+    void RenderCharacter(Graphics& g, Character& character, Vector2f camera);
+    void RenderSprite(Graphics& g, Sprite* sprite, Vector2f position, Vector2f camera);
 };
 
 #endif // GAME_H_

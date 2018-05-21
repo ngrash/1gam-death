@@ -14,7 +14,7 @@ Player::Player(Resources& resources) :
   animation_->frame_duration = 0.10;
   animation_->texture = resources_.GetTexture(PLAYER_IDLE_TEXTURE);
 
-  position_.x = 40;
+  position_.x = 50;
   position_.y = FLOOR_Y;
 }
 

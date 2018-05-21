@@ -71,12 +71,20 @@ bool Game::Init() {
   player_ = new Player(*resources_);
   zombie_ = new Zombie(*player_, *resources_);
 
+  camera_.x = 0;
+  camera_.y = 0;
+
   level_ = new Sprite();
   level_->texture = resources_->GetTexture(Texture::LEVEL_1);
   level_->src_rect.x = 0;
   level_->src_rect.y = 0;
   level_->src_rect.w = 160;
   level_->src_rect.h = 144;
+
+  if(SDL_QueryTexture(level_->texture, NULL, NULL, &level_width_, NULL) < 0) {
+    logSDLError("SDL_QueryTexture");
+    return false;
+  }
 
   logDebug("Game::Init() successful");
 
@@ -130,6 +138,22 @@ void Game::Update(float seconds_elapsed) {
 
   player_->Update(seconds_elapsed);
   zombie_->Update(seconds_elapsed);
+
+  // Make the camera follow the player
+  Vector2f player_pos = player_->GetPosition();
+  if(player_pos.x > ((SCREEN_WIDTH / 2) - 8)) {
+    if(player_pos.x < level_width_ - ((SCREEN_WIDTH / 2) + 8)) {
+      camera_.x = player_pos.x - (SCREEN_WIDTH / 2) + 8;
+    } else {
+      camera_.x = level_width_ - SCREEN_WIDTH;
+    }
+  }
+  else {
+    camera_.x = 0;
+  }
+
+  // Select the right part of the level
+  level_->src_rect.x = camera_.x;
 }
 
 void Game::HandleInput() {
@@ -187,10 +211,10 @@ void Game::HandleInput() {
 void Game::Render(Graphics& graphics) {
   graphics.BeginRender();
 
-  RenderSprite(graphics, level_, 0, 0, 0, 0);
+  graphics.RenderSprite(level_, 0, 0);
 
-  RenderCharacter(graphics, *player_, 0, 0);
-  RenderCharacter(graphics, *zombie_, 0, 0);
+  RenderCharacter(graphics, *player_, camera_);
+  RenderCharacter(graphics, *zombie_, camera_);
 
   graphics.RenderText("DEATH", 65, 30);
 
@@ -204,16 +228,13 @@ void Game::Render(Graphics& graphics) {
  * Render methods use screen coordinates where (0,0) is the top left of the screen.
  * The camera uses world coordinates to indicate where we are looking on the world.
  */
-void Game::RenderCharacter(Graphics& g, Character& character, float camX, float camY) {
-  Sprite* sprite = character.GetSprite();
-  Vector2f position = character.GetPosition();
-
-  RenderSprite(g, sprite, position.x, position.y, camX, camY);
+void Game::RenderCharacter(Graphics& g, Character& character, Vector2f camera) {
+  RenderSprite(g, character.GetSprite(), character.GetPosition(), camera);
 }
 
-void Game::RenderSprite(Graphics& g, Sprite* sprite, float x, float y, float camX, float camY) {
-  float relCamX = x - camX;
-  float relCamY = y - camY;
+void Game::RenderSprite(Graphics& g, Sprite* sprite, Vector2f position, Vector2f camera) {
+  float relCamX = position.x - camera.x;
+  float relCamY = position.y - camera.y;
 
   float screenX = relCamX;
   float screenY = SCREEN_HEIGHT - relCamY - sprite->src_rect.h;
