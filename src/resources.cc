@@ -14,8 +14,14 @@ SDL_Texture *Resources::LoadTexture(Texture texture) {
     case Texture::PLAYER_IDLE:
       tex = LoadTexture("assets/player_idle.png");
       break;
+    case Texture::PLAYER_IDLE_W_SHOTGUN:
+      tex = LoadTexture("assets/player_idle_w_shotgun.png");
+      break;
     case Texture::PLAYER_WALKING:
       tex = LoadTexture("assets/player_walking.png");
+      break;
+    case Texture::PLAYER_WALKING_W_SHOTGUN:
+      tex = LoadTexture("assets/player_walking_w_shotgun.png");
       break;
     case Texture::ZOMBIE_IDLE:
       tex = LoadTexture("assets/zombie_idle.png");

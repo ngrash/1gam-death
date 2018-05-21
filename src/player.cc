@@ -4,12 +4,15 @@
 #define MAX_PLAYER_VELOCITY_Y 50
 #define FLOOR_Y 50
 
+#define PLAYER_IDLE_TEXTURE Texture::PLAYER_IDLE_W_SHOTGUN
+#define PLAYER_WALKING_TEXTURE Texture::PLAYER_WALKING_W_SHOTGUN
+
 Player::Player(Resources& resources) :
   velocity_x_factor_(0),
   resources_(resources)
 {
   animation_->frame_duration = 0.10;
-  animation_->texture = resources_.GetTexture(Texture::PLAYER_IDLE);
+  animation_->texture = resources_.GetTexture(PLAYER_IDLE_TEXTURE);
 
   position_.x = 40;
   position_.y = FLOOR_Y;
@@ -24,14 +27,14 @@ void Player::SetVelocityXFactor(float factor) {
     animation_->Reset();
 
     if(factor == 0) {
-      animation_->texture = resources_.GetTexture(Texture::PLAYER_IDLE);
+      animation_->texture = resources_.GetTexture(PLAYER_IDLE_TEXTURE);
       animation_->num_frames = 0;
     } else if(factor > 0) {
-      animation_->texture = resources_.GetTexture(Texture::PLAYER_WALKING);
+      animation_->texture = resources_.GetTexture(PLAYER_WALKING_TEXTURE);
       animation_->render_flip = SDL_FLIP_NONE;
       animation_->num_frames = 4;
     } else if(factor < 0) {
-      animation_->texture = resources_.GetTexture(Texture::PLAYER_WALKING);
+      animation_->texture = resources_.GetTexture(PLAYER_WALKING_TEXTURE);
       animation_->render_flip = SDL_FLIP_HORIZONTAL;
       animation_->num_frames = 4;
     }
