@@ -71,6 +71,13 @@ bool Game::Init() {
   player_ = new Player(*resources_);
   zombie_ = new Zombie(*player_, *resources_);
 
+  level_ = new Sprite();
+  level_->texture = resources_->GetTexture(Texture::LEVEL_1);
+  level_->src_rect.x = 0;
+  level_->src_rect.y = 0;
+  level_->src_rect.w = 160;
+  level_->src_rect.h = 144;
+
   logDebug("Game::Init() successful");
 
   return true;
@@ -82,6 +89,7 @@ void Game::Quit() {
   delete graphics_;
   delete player_;
   delete zombie_;
+  delete level_;
 
   if(renderer_ != nullptr) {
     SDL_DestroyRenderer(renderer_);
@@ -179,6 +187,8 @@ void Game::HandleInput() {
 void Game::Render(Graphics& graphics) {
   graphics.BeginRender();
 
+  RenderSprite(graphics, level_, 0, 0, 0, 0);
+
   RenderCharacter(graphics, *player_, 0, 0);
   RenderCharacter(graphics, *zombie_, 0, 0);
 
@@ -197,8 +207,13 @@ void Game::Render(Graphics& graphics) {
 void Game::RenderCharacter(Graphics& g, Character& character, float camX, float camY) {
   Sprite* sprite = character.GetSprite();
   Vector2f position = character.GetPosition();
-  float relCamX = position.x - camX;
-  float relCamY = position.y - camY;
+
+  RenderSprite(g, sprite, position.x, position.y, camX, camY);
+}
+
+void Game::RenderSprite(Graphics& g, Sprite* sprite, float x, float y, float camX, float camY) {
+  float relCamX = x - camX;
+  float relCamY = y - camY;
 
   float screenX = relCamX;
   float screenY = SCREEN_HEIGHT - relCamY - sprite->src_rect.h;

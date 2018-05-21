@@ -16,6 +16,7 @@ Graphics::~Graphics() {
 }
 
 void Graphics::BeginRender() {
+  //SDL_SetRenderDrawColor(&renderer_, 128, 128, 128, 255);
   SDL_SetRenderDrawColor(&renderer_, 128, 128, 128, 255);
   SDL_RenderClear(&renderer_);
 }

@@ -29,6 +29,9 @@ SDL_Texture *Resources::LoadTexture(Texture texture) {
     case Texture::ZOMBIE_WALKING:
       tex = LoadTexture("assets/zombie_walking.png");
       break;
+    case Texture::LEVEL_1:
+      tex = LoadTexture("assets/lvl1.png");
+      break;
   }
 
   return tex;

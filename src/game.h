@@ -24,12 +24,14 @@ class Game {
     Player* player_;
     Zombie* zombie_;
     int playerVelocityX_;
+    Sprite* level_;
 
     void HandleInput();
     void Update(float seconds_elapsed);
     void Render(Graphics& graphics);
 
     void RenderCharacter(Graphics& g, Character& character, float camX, float camY);
+    void RenderSprite(Graphics& g, Sprite* sprite, float x, float y, float camX, float camY);
 };
 
 #endif // GAME_H_
