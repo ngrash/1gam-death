@@ -12,8 +12,8 @@ Zombie::Zombie(Resources& resources, Player& player) :
   resources_(resources)
 {
   animation_->frame_duration = 0.25;
-  animation_->texture = resources_.GetTexture(Texture::ZOMBIE_WALKING);
-  animation_->num_frames = 4;
+  animation_->texture = resources_.GetTexture(Texture::ZOMBIE_IDLE);
+  animation_->num_frames = 0;
 }
 
 void Zombie::Update(float seconds_elapsed) {
