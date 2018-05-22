@@ -7,6 +7,8 @@
 #include <SDL2/SDL.h>
 
 enum class Texture {
+  HEART,
+  SHELL,
   PLAYER_IDLE,
   PLAYER_IDLE_W_SHOTGUN,
   PLAYER_WALKING,

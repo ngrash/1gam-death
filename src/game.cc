@@ -221,6 +221,14 @@ void Game::Render(Graphics& graphics) {
 
   graphics.RenderSprite(level_background_, 0, 0);
 
+  graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 60, -1);
+  graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 70, -1);
+  graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 80, -1);
+
+  graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 125, 0);
+  graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 135, 0);
+  graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 145, 0);
+
   RenderCharacter(graphics, *player_, camera_);
 
   std::vector<Character*>* characters = world_->GetCharacters();

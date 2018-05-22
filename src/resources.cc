@@ -11,6 +11,12 @@ SDL_Texture *Resources::LoadTexture(Texture texture) {
   SDL_Texture *tex = nullptr;
 
   switch(texture) {
+    case Texture::HEART:
+      tex = LoadTexture("assets/heart.png");
+      break;
+    case Texture::SHELL:
+      tex = LoadTexture("assets/shell.png");
+      break;
     case Texture::PLAYER_IDLE:
       tex = LoadTexture("assets/player_idle.png");
       break;
