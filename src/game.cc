@@ -1,8 +1,10 @@
 #include "game.h"
 
 #include "SDL2/SDL_image.h"
+
 #include "logging.h"
 #include "vector2f.h"
+#include "level1.h"
 
 #define WINDOW_TITLE "DEATH - 65th #1GAM May 2018"
 #define WINDOW_X SDL_WINDOWPOS_CENTERED
@@ -65,23 +67,28 @@ bool Game::Init() {
     return false;
   }
 
+  camera_.x = 0;
+  camera_.y = 0;
+
   resources_ = new Resources(*renderer_);
   graphics_ = new Graphics(*renderer_);
 
   player_ = new Player(*resources_);
-  zombie_ = new Zombie(*player_, *resources_);
+  world_ = new World(*player_);
 
-  camera_.x = 0;
-  camera_.y = 0;
+  level_ = new Level1(*resources_);
+  level_->Initialize(*world_);
 
-  level_ = new Sprite();
-  level_->texture = resources_->GetTexture(Texture::LEVEL_1);
-  level_->src_rect.x = 0;
-  level_->src_rect.y = 0;
-  level_->src_rect.w = 160;
-  level_->src_rect.h = 144;
+  Texture level_texture = level_->GetBackgroundTexture();
 
-  if(SDL_QueryTexture(level_->texture, NULL, NULL, &level_width_, NULL) < 0) {
+  level_background_= new Sprite();
+  level_background_->texture = resources_->GetTexture(level_texture);
+  level_background_->src_rect.x = 0;
+  level_background_->src_rect.y = 0;
+  level_background_->src_rect.w = SCREEN_WIDTH;
+  level_background_->src_rect.h = SCREEN_HEIGHT;
+
+  if(SDL_QueryTexture(level_background_->texture, NULL, NULL, &level_width_, NULL) < 0) {
     logSDLError("SDL_QueryTexture");
     return false;
   }
@@ -95,8 +102,8 @@ void Game::Quit() {
   resources_->DestroyTextures();
   delete resources_;
   delete graphics_;
+  delete world_;
   delete player_;
-  delete zombie_;
   delete level_;
 
   if(renderer_ != nullptr) {
@@ -135,12 +142,12 @@ void Game::Run() {
 
 void Game::Update(float seconds_elapsed) {
   player_->SetVelocityXFactor(playerVelocityX_);
-
   player_->Update(seconds_elapsed);
-  zombie_->Update(seconds_elapsed);
+
+  world_->Update(seconds_elapsed);
 
   // Make the camera follow the player
-  Vector2f player_pos = player_->GetPosition();
+  Vector2f player_pos = player_->position_;
   if(player_pos.x > ((SCREEN_WIDTH / 2) - 8)) {
     if(player_pos.x < level_width_ - ((SCREEN_WIDTH / 2) + 8)) {
       camera_.x = player_pos.x - (SCREEN_WIDTH / 2) + 8;
@@ -153,7 +160,7 @@ void Game::Update(float seconds_elapsed) {
   }
 
   // Select the right part of the level
-  level_->src_rect.x = camera_.x;
+  level_background_->src_rect.x = camera_.x;
 }
 
 void Game::HandleInput() {
@@ -211,12 +218,17 @@ void Game::HandleInput() {
 void Game::Render(Graphics& graphics) {
   graphics.BeginRender();
 
-  graphics.RenderSprite(level_, 0, 0);
+  graphics.RenderSprite(level_background_, 0, 0);
 
   RenderCharacter(graphics, *player_, camera_);
-  RenderCharacter(graphics, *zombie_, camera_);
 
-  graphics.RenderText("DEATH", 65, 30);
+  std::vector<Character*>* characters = world_->GetCharacters();
+  for(int i = 0; i < characters->size(); i++) {
+    Character* character = (*characters)[i];
+    RenderCharacter(graphics, *character, camera_);
+  }
+
+  graphics.RenderText("100", 4, 0);
 
   graphics.EndRender();
 }
@@ -229,7 +241,7 @@ void Game::Render(Graphics& graphics) {
  * The camera uses world coordinates to indicate where we are looking on the world.
  */
 void Game::RenderCharacter(Graphics& g, Character& character, Vector2f camera) {
-  RenderSprite(g, character.GetSprite(), character.GetPosition(), camera);
+  RenderSprite(g, character.GetSprite(), character.position_, camera);
 }
 
 void Game::RenderSprite(Graphics& g, Sprite* sprite, Vector2f position, Vector2f camera) {

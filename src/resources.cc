@@ -41,6 +41,7 @@ void Resources::DestroyTextures() {
   for(int i = 0; i < (int)Texture::_LAST_ELEMENT_; i++) {
     if(textures_[i] != nullptr) {
       SDL_DestroyTexture(textures_[i]);
+      textures_[i] = nullptr;
     }
   }
 }

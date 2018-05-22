@@ -7,7 +7,7 @@
 
 class Zombie : public Character {
   public:
-    Zombie(Player& player, Resources& resources);
+    Zombie(Resources& resources, Player& player);
     void Update(float seconds_elapsed);
   private:
     Player& player_;

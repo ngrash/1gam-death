@@ -11,10 +11,9 @@ class Character {
     ~Character();
     Sprite* GetSprite();
     virtual void Update(float seconds_elapsed) = 0;
-    Vector2f GetPosition();
+    Vector2f position_;
   protected:
     Animation* animation_;
-    Vector2f position_;
     Vector2f acceleration_;
     Vector2f velocity_;
 };

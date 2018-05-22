@@ -7,7 +7,7 @@
 #define MAX_ZOMBIE_VELOCITY_X 10
 #define DESIRED_DISTANCE_TO_PLAYER 6
 
-Zombie::Zombie(Player& player, Resources& resources) :
+Zombie::Zombie(Resources& resources, Player& player) :
   player_(player),
   resources_(resources)
 {
@@ -22,7 +22,7 @@ Zombie::Zombie(Player& player, Resources& resources) :
 void Zombie::Update(float seconds_elapsed) {
   animation_->Update(seconds_elapsed);
 
-  Vector2f player_pos = player_.GetPosition();
+  Vector2f player_pos = player_.position_;
 
   if(player_pos.x > position_.x) {
     animation_->render_flip = SDL_FLIP_NONE;

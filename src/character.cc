@@ -11,7 +11,3 @@ Character::~Character() {
 Sprite* Character::GetSprite() {
   return animation_;
 }
-
-Vector2f Character::GetPosition() {
-  return position_;
-}

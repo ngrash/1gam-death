@@ -7,6 +7,7 @@
 #include "resources.h"
 #include "vector2f.h"
 #include "zombie.h"
+#include "level.h"
 
 class Game {
   public:
@@ -23,11 +24,14 @@ class Game {
     bool loop_;
 
     Player* player_;
-    Zombie* zombie_;
+    World* world_;
+
     int playerVelocityX_;
-    Sprite* level_;
-    int level_width_;
     Vector2f camera_;
+
+    Level*  level_;
+    Sprite* level_background_;
+    int     level_width_;
 
     void HandleInput();
     void Update(float seconds_elapsed);
