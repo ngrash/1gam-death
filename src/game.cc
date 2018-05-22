@@ -23,7 +23,7 @@ Game::Game()
   : renderer_(nullptr),
     window_(nullptr),
     loop_(true),
-    playerVelocityX_(0)
+    player_velocity_x_(0)
 {}
 
 bool Game::Init() {
@@ -141,7 +141,7 @@ void Game::Run() {
 }
 
 void Game::Update(float seconds_elapsed) {
-  player_->SetVelocityXFactor(playerVelocityX_);
+  player_->SetVelocityXFactor(player_velocity_x_);
   player_->Update(seconds_elapsed);
 
   world_->Update(seconds_elapsed);
@@ -181,14 +181,14 @@ void Game::HandleInput() {
             break;
           case SDLK_a:
             if(!event.key.repeat) {
-              playerVelocityX_ -= 1;
+              player_velocity_x_ -= 1;
             }
             break;
           case SDLK_s:
             break;
           case SDLK_d:
             if(!event.key.repeat) {
-              playerVelocityX_ += 1;
+              player_velocity_x_ += 1;
             }
             break;
           case SDLK_j:
@@ -203,12 +203,12 @@ void Game::HandleInput() {
           case SDLK_w:
             break;
           case SDLK_a:
-            playerVelocityX_ += 1;
+            player_velocity_x_ += 1;
             break;
           case SDLK_s:
             break;
           case SDLK_d:
-            playerVelocityX_ -= 1;
+            player_velocity_x_ -= 1;
             break;
         }
         break;

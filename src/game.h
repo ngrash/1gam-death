@@ -26,7 +26,7 @@ class Game {
     Player* player_;
     World* world_;
 
-    int playerVelocityX_;
+    int player_velocity_x_;
     Vector2f camera_;
 
     Level*  level_;
