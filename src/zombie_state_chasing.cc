@@ -35,9 +35,9 @@ void ZombieStateChasing::Update(float seconds_elapsed, Zombie& zombie) {
   if(reached_player) {
     zombie.SetState(zombie.state_attacking_);
   } else {
-      zombie.animation_->texture = zombie.resources_.GetTexture(Texture::ZOMBIE_WALKING);
-      zombie.animation_->num_frames = 4;
+    zombie.animation_->texture = zombie.resources_.GetTexture(Texture::ZOMBIE_WALKING);
+    zombie.animation_->num_frames = 4;
 
-      zombie.position_.x += zombie.velocity_.x * seconds_elapsed;
+    zombie.position_.x += zombie.velocity_.x * seconds_elapsed;
   }
 }
