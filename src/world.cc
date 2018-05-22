@@ -23,8 +23,10 @@ void World::Spawn(Character& character) {
 }
 
 void World::Release() {
-  // whoever spawned those characters better cleans them up
-  // the world just forgets about them
+  for(int i = 0; i < characters_.size(); i++) {
+    delete characters_[i];
+  }
+
   characters_.clear();
 }
 

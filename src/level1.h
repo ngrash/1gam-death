@@ -20,6 +20,15 @@ class Level1 : public Level {
   private:
     Resources& resources_;
     Zombie* first_zombie_;
+
+    bool spawned_first_zombie_;
+    bool spawned_wave_1_;
+    bool spawned_wave_2_;
+
+    void SpawnWave1(World& world);
+    void SpawnWave2(World& world);
+
+    void SpawnZombie(World& world, int x);
 };
 
 #endif // LEVEL1_H_

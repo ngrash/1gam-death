@@ -145,6 +145,7 @@ void Game::Update(float seconds_elapsed) {
   player_->Update(seconds_elapsed);
 
   world_->Update(seconds_elapsed);
+  level_->Update(seconds_elapsed, *world_);
 
   // Make the camera follow the player
   Vector2f player_pos = player_->position_;
