@@ -8,11 +8,13 @@
 #include "zombie_state_asleep.h"
 #include "zombie_state_rising.h"
 #include "zombie_state_chasing.h"
+#include "zombie_state_attacking.h"
 
 class Zombie : public Character {
   friend class ZombieStateAsleep;
   friend class ZombieStateRising;
   friend class ZombieStateChasing;
+  friend class ZombieStateAttacking;
 
   public:
     Zombie(Resources& resources, Player& player);
@@ -23,6 +25,7 @@ class Zombie : public Character {
     ZombieStateAsleep* state_asleep_;
     ZombieStateRising* state_rising_;
     ZombieStateChasing* state_chasing_;
+    ZombieStateAttacking* state_attacking_;
   private:
     Player& player_;
     Resources& resources_;

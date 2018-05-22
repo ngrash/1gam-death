@@ -7,6 +7,7 @@ Zombie::Zombie(Resources& resources, Player& player) :
   state_asleep_ = new ZombieStateAsleep();
   state_rising_ = new ZombieStateRising();
   state_chasing_ = new ZombieStateChasing();
+  state_attacking_ = new ZombieStateAttacking();
 
   SetState(state_asleep_);
 }
@@ -15,6 +16,7 @@ Zombie::~Zombie() {
   delete state_asleep_;
   delete state_rising_;
   delete state_chasing_;
+  delete state_attacking_;
 }
 
 void Zombie::SetState(ZombieState* state) {
