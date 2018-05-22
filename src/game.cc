@@ -147,8 +147,18 @@ void Game::Update(float seconds_elapsed) {
   world_->Update(seconds_elapsed);
   level_->Update(seconds_elapsed, *world_);
 
-  // Make the camera follow the player
   Vector2f player_pos = player_->position_;
+
+  // Restrict player to level boundaries
+  if(player_pos.x <= 0) {
+    player_->position_.x = 0;
+  }
+
+  if(player_pos.x >= level_width_ - 36) {
+    player_->position_.x = level_width_ - 36;
+  }
+
+  // Make the camera follow the player
   if(player_pos.x > ((SCREEN_WIDTH / 2) - 8)) {
     if(player_pos.x < level_width_ - ((SCREEN_WIDTH / 2) + 8)) {
       camera_.x = player_pos.x - (SCREEN_WIDTH / 2) + 8;
