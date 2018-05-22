@@ -62,6 +62,7 @@ void Level1::SpawnWave2(World& world) {
 
 void Level1::SpawnZombie(World& world, int x) {
   Zombie* z = new Zombie(resources_, *world.GetPlayer());
+  z->SetState(z->state_rising_);
   z->position_.x = x - 8;
   z->position_.y = 16;
   world.Spawn(*z);
