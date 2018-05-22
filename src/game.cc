@@ -225,9 +225,9 @@ void Game::Render(Graphics& graphics) {
   graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 70, -1);
   graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 80, -1);
 
-  graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 125, 0);
-  graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 135, 0);
-  graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 145, 0);
+  if(player_->health_ >= 1) graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 125, 0);
+  if(player_->health_ >= 2) graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 135, 0);
+  if(player_->health_ >= 3) graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 145, 0);
 
   RenderCharacter(graphics, *player_, camera_);
 

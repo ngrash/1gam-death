@@ -11,7 +11,7 @@ class Player : public Character {
     void Update(float seconds_elapsed);
     void SetVelocityXFactor(float factor);
     void Jump();
-
+    int health_;
   private:
     Resources& resources_;
 

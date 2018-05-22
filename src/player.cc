@@ -9,7 +9,8 @@
 
 Player::Player(Resources& resources) :
   velocity_x_factor_(0),
-  resources_(resources)
+  resources_(resources),
+  health_(3)
 {
   animation_->frame_duration = 0.10;
   animation_->texture = resources_.GetTexture(PLAYER_IDLE_TEXTURE);

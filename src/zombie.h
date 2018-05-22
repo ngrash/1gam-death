@@ -21,6 +21,7 @@ class Zombie : public Character {
     ~Zombie();
     void Update(float seconds_elapsed);
     void SetState(ZombieState* state);
+    float GetDistanceToPlayer();
 
     ZombieStateAsleep* state_asleep_;
     ZombieStateRising* state_rising_;

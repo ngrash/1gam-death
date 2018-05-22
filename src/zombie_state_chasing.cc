@@ -1,11 +1,9 @@
 #include "zombie_state_chasing.h"
 
-#include <cmath>
-
 #include "vector2f.h"
 #include "zombie.h"
 
-#define DESIRED_DISTANCE_TO_PLAYER 6
+#define DESIRED_DISTANCE_TO_PLAYER 10
 #define MAX_ZOMBIE_VELOCITY_X 10
 
 void ZombieStateChasing::Initialize(Zombie& zombie) {
@@ -29,7 +27,7 @@ void ZombieStateChasing::Update(float seconds_elapsed, Zombie& zombie) {
     zombie.velocity_.x = -MAX_ZOMBIE_VELOCITY_X;
   }
 
-  float distance_to_player = abs(player_pos.x - zombie.position_.x);
+  float distance_to_player = zombie.GetDistanceToPlayer();
   bool reached_player = distance_to_player <= DESIRED_DISTANCE_TO_PLAYER;
 
   if(reached_player) {

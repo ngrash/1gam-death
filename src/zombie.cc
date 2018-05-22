@@ -1,5 +1,7 @@
 #include "zombie.h"
 
+#include <cmath>
+
 Zombie::Zombie(Resources& resources, Player& player) :
   player_(player),
   resources_(resources)
@@ -26,4 +28,8 @@ void Zombie::SetState(ZombieState* state) {
 
 void Zombie::Update(float seconds_elapsed) {
   current_state_->Update(seconds_elapsed, *this);
+}
+
+float Zombie::GetDistanceToPlayer() {
+  return abs(player_.position_.x - position_.x);
 }
