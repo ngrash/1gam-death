@@ -2,6 +2,9 @@
 
 Character::Character() {
   animation_ = new Animation();
+  acceleration_ = {};
+  velocity_ = {};
+  position_ = {};
 }
 
 Character::~Character() {
