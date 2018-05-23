@@ -7,19 +7,30 @@
 #define PLAYER_IDLE_TEXTURE Texture::PLAYER_IDLE_W_SHOTGUN
 #define PLAYER_WALKING_TEXTURE Texture::PLAYER_WALKING_W_SHOTGUN
 
-Player::Player(Resources& resources) :
+Player::Player(Resources& resources, Collisions& collisions) :
   velocity_x_factor_(0),
   resources_(resources),
-  health_(3)
+  health_(3),
+  collisions_(collisions)
 {
+  hitbox_.x = 5;
+  hitbox_.y = 0;
+  hitbox_.h = 16;
+  hitbox_.w = 5;
+
   animation_->frame_duration = 0.10;
   animation_->texture = resources_.GetTexture(PLAYER_IDLE_TEXTURE);
-
-  position_.x = 50;
-  position_.y = FLOOR_Y;
 }
 
 void Player::SetVelocityXFactor(float factor) {
+  if(collisions_.DoesCollide(this)) {
+    if(factor > 0) {
+      factor = 0.5;
+    } else if(factor < 0) {
+      factor = -0.5;
+    }
+  }
+
   if(velocity_x_factor_ != factor) {
     velocity_x_factor_ = factor;
 

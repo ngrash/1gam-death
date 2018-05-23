@@ -6,6 +6,11 @@ Zombie::Zombie(Resources& resources, Player& player) :
   player_(player),
   resources_(resources)
 {
+  hitbox_.x = 3;
+  hitbox_.y = 0;
+  hitbox_.w = 10;
+  hitbox_.h = 16;
+
   state_asleep_ = new ZombieStateAsleep();
   state_rising_ = new ZombieStateRising();
   state_chasing_ = new ZombieStateChasing();

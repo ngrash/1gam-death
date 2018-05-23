@@ -3,7 +3,7 @@
 #include "zombie.h"
 
 #define ATTACK_RANGE 14
-#define ATTACK_HEIGHT 32
+#define ATTACK_HEIGHT 16
 
 void ZombieStateAttacking::Initialize(Zombie& zombie) {
   state_duration_ = 0;

@@ -2,6 +2,7 @@
 #define GAME_H_
 
 #include "character.h"
+#include "collisions.h"
 #include "graphics.h"
 #include "player.h"
 #include "resources.h"
@@ -25,6 +26,7 @@ class Game {
 
     Player* player_;
     World* world_;
+    Collisions* collisions_;
 
     int player_velocity_x_;
     Vector2f camera_;
@@ -39,6 +41,8 @@ class Game {
 
     void RenderCharacter(Graphics& g, Character& character, Vector2f camera);
     void RenderSprite(Graphics& g, Sprite* sprite, Vector2f position, Vector2f camera);
+    void RenderRect(Graphics& g, SDL_Rect rect, Vector2f position, Vector2f camera);
+    Vector2f GetScreenPosition(Vector2f position, int height, Vector2f camera);
 };
 
 #endif // GAME_H_

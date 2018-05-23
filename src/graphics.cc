@@ -70,3 +70,14 @@ void Graphics::RenderSprite(Sprite* sprite, const int x, const int y) {
       NULL,
       sprite->render_flip);
 }
+
+void Graphics::RenderRect(SDL_Rect* rect) {
+  SDL_Rect r;
+  r.x = rect->x * GAME_SCALE;
+  r.y = rect->y * GAME_SCALE;
+  r.h = rect->h * GAME_SCALE;
+  r.w = rect->w * GAME_SCALE;
+
+  SDL_SetRenderDrawColor(&renderer_, 255, 128, 128, 255);
+  SDL_RenderDrawRect(&renderer_, &r);
+}

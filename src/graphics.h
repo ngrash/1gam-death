@@ -18,6 +18,7 @@ class Graphics {
     void RenderText(const std::string& text, const int x, const int y);;
     void RenderTexture(SDL_Texture* texture, const int x, const int y);
     void RenderSprite(Sprite* sprite, const int x, const int y);
+    void RenderRect(SDL_Rect* rect);
     ~Graphics();
   private:
     SDL_Renderer& renderer_;

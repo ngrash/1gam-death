@@ -70,11 +70,13 @@ bool Game::Init() {
   camera_.x = 0;
   camera_.y = 0;
 
+  collisions_ = new Collisions();
+
   resources_ = new Resources(*renderer_);
   graphics_ = new Graphics(*renderer_);
 
-  player_ = new Player(*resources_);
-  world_ = new World(*player_);
+  player_ = new Player(*resources_, *collisions_);
+  world_ = new World(*player_, *collisions_);
 
   level_ = new Level1(*resources_);
   level_->Initialize(*world_);
@@ -105,6 +107,7 @@ void Game::Quit() {
   delete world_;
   delete player_;
   delete level_;
+  delete collisions_;
 
   if(renderer_ != nullptr) {
     SDL_DestroyRenderer(renderer_);
@@ -240,11 +243,20 @@ void Game::Render(Graphics& graphics) {
   if(player_->health_ >= 3) graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 145, 0);
 
   RenderCharacter(graphics, *player_, camera_);
+#ifdef DEBUG
+  RenderRect(graphics, player_->hitbox_, player_->position_, camera_);
+#endif // DEBUG
 
   std::vector<Character*>* characters = world_->GetCharacters();
   for(int i = 0; i < characters->size(); i++) {
     Character* character = (*characters)[i];
     RenderCharacter(graphics, *character, camera_);
+
+#ifdef DEBUG
+    if(collisions_->DoCollide(player_, character)) {
+      RenderRect(graphics, character->hitbox_, character->position_, camera_);
+    }
+#endif // DEBUG
   }
 
   graphics.RenderText("100", 4, 0);
@@ -260,15 +272,34 @@ void Game::Render(Graphics& graphics) {
  * The camera uses world coordinates to indicate where we are looking on the world.
  */
 void Game::RenderCharacter(Graphics& g, Character& character, Vector2f camera) {
-  RenderSprite(g, character.GetSprite(), character.position_, camera);
+  Sprite* sprite = character.GetSprite();
+  Vector2f screen = GetScreenPosition(character.position_, sprite->src_rect.h, camera);
+  g.RenderSprite(sprite, screen.x, screen.y);
 }
 
 void Game::RenderSprite(Graphics& g, Sprite* sprite, Vector2f position, Vector2f camera) {
-  float relCamX = position.x - camera.x;
-  float relCamY = position.y - camera.y;
+  Vector2f screen = GetScreenPosition(position, sprite->src_rect.h, camera);
+  g.RenderSprite(sprite, screen.x, screen.y);
+}
 
-  float screenX = relCamX;
-  float screenY = SCREEN_HEIGHT - relCamY - sprite->src_rect.h;
+void Game::RenderRect(Graphics& g, SDL_Rect rect, Vector2f position, Vector2f camera) {
+  Vector2f screen = GetScreenPosition(position, rect.h, camera);
 
-  g.RenderSprite(sprite, screenX, screenY);
+  SDL_Rect target;
+  target.x = screen.x + rect.x;
+  target.y = screen.y + rect.y;
+  target.w = rect.w;
+  target.h = rect.h;
+  g.RenderRect(&target);
+}
+
+Vector2f Game::GetScreenPosition(Vector2f position, int height, Vector2f camera) {
+  float rel_cam_x = position.x - camera.x;
+  float rel_cam_y = position.y - camera.y;
+
+  Vector2f screen;
+  screen.x = rel_cam_x;
+  screen.y = SCREEN_HEIGHT - rel_cam_y - height;
+
+  return screen;
 }

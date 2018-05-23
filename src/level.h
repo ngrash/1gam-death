@@ -1,8 +1,6 @@
 #ifndef LEVEL_H_
 #define LEVEL_H_
 
-#include <vector>
-
 #include "resources.h"
 #include "world.h"
 

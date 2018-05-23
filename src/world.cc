@@ -1,8 +1,9 @@
 #include "world.h"
 
-World::World(Player& player) {
-  player_ = &player;
-}
+World::World(Player& player, Collisions& collisions) :
+  player_(player),
+  collisions_(collisions)
+{}
 
 void World::Update(float seconds_elapsed) {
   for(int i = 0; i < characters_.size(); i++) {
@@ -11,7 +12,7 @@ void World::Update(float seconds_elapsed) {
 }
 
 Player* World::GetPlayer() {
-  return player_;
+  return &player_;
 }
 
 std::vector<Character*>* World::GetCharacters() {
@@ -19,7 +20,8 @@ std::vector<Character*>* World::GetCharacters() {
 }
 
 void World::Spawn(Character& character) {
-    characters_.push_back(&character);
+  characters_.push_back(&character);
+  collisions_.AddCollidable(&character);
 }
 
 void World::Release() {
@@ -28,5 +30,6 @@ void World::Release() {
   }
 
   characters_.clear();
+  collisions_.Clear();
 }
 
