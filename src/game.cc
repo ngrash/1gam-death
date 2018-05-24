@@ -272,7 +272,7 @@ void Game::Render(Graphics& graphics) {
     graphics.RenderTextCentered(*player_->text_, SCREEN_WIDTH, 20);
   }
 
-  graphics.RenderText("100", 4, 0);
+  graphics.RenderText(std::to_string(player_->score_), 4, 0);
 
   graphics.EndRender();
 }

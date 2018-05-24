@@ -11,6 +11,7 @@
 Player::Player(Resources& resources, Collisions& collisions) :
   health_(3),
   shells_(0),
+  score_(0),
   reloading_(false),
   unarmed_(false),
   text_(nullptr),
@@ -95,6 +96,9 @@ void Player::Shot() {
 
   if(enemy != nullptr) {
     enemy->health_--;
+    if(enemy->health_ <= 0) {
+      score_ += 100;
+    }
   }
 
   shells_--;

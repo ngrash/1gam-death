@@ -20,6 +20,7 @@ class Player : public Character {
 
     int health_;
     int shells_;
+    int score_;
     bool reloading_;
     bool unarmed_;
     Animation* reloading_animation_;
