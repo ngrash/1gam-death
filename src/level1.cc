@@ -6,18 +6,22 @@ Level1::Level1(Resources& resources) :
   spawned_first_zombie_(false),
   spawned_wave_1_(false),
   spawned_wave_2_(false),
-  mentioned_undead_(false)
+  mentioned_undead_(false),
+  mentioned_locked_chapel_(false)
 {
   text_intro_ = new std::string("I've come to purge this place.");
   text_spotted_ = new std::string("What's moving over there?");
   text_wave_1_ = new std::string("For hell's sake!");
   text_undead_ = new std::string("Undead!");
+  text_locked_chapel_ = new std::string("The chapel is locked.");
 }
 
 Level1::~Level1() {
   delete text_intro_;
   delete text_spotted_;
   delete text_wave_1_;
+  delete text_undead_;
+  delete text_locked_chapel_;
 }
 
 Texture Level1::GetBackgroundTexture() {
@@ -57,6 +61,11 @@ void Level1::Update(float seconds_elapsed, World& world) {
   if(!spawned_wave_2_ && player_pos.x >= 770 - 8) {
     spawned_wave_2_ = true;
     SpawnWave2(world);
+  }
+
+  if(!mentioned_locked_chapel_ && player_pos.x >= 978 - 8) {
+    mentioned_locked_chapel_ = true;
+    world.GetPlayer()->Say(text_locked_chapel_, 3);
   }
 }
 

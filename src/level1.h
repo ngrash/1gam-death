@@ -26,11 +26,13 @@ class Level1 : public Level {
     std::string* text_spotted_;
     std::string* text_wave_1_;
     std::string* text_undead_;
+    std::string* text_locked_chapel_;
 
     bool spawned_first_zombie_;
     bool spawned_wave_1_;
     bool spawned_wave_2_;
     bool mentioned_undead_;
+    bool mentioned_locked_chapel_;
 
     void SpawnWave1(World& world);
     void SpawnWave2(World& world);
