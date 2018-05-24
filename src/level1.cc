@@ -3,6 +3,7 @@
 
 Level1::Level1(Resources& resources) :
   resources_(resources),
+  first_zombie_(nullptr),
   spawned_first_zombie_(false),
   spawned_wave_1_(false),
   spawned_wave_2_(false),
@@ -39,22 +40,24 @@ void Level1::Initialize(World& world) {
 
 void Level1::Update(float seconds_elapsed, World& world) {
   Vector2f player_pos = world.GetPlayer()->position_;
+  Player* player = world.GetPlayer();
 
   if(!spawned_first_zombie_ && player_pos.x >= 299 - 8) {
     spawned_first_zombie_ = true;
-    world.GetPlayer()->Say(text_spotted_, 3);
-    world.GetPlayer()->unarmed_ = false;
-    SpawnZombie(world, 580);
+    player->Say(text_spotted_, 3);
+    player->unarmed_ = false;
+    first_zombie_ = SpawnZombie(world, 580);
   }
 
-  if(!mentioned_undead_ && player_pos.x >= 450) {
+  if(!mentioned_undead_ && first_zombie_ != nullptr
+      && first_zombie_->position_.x - player->position_.x <= 70) {
     mentioned_undead_ = true;
-    world.GetPlayer()->Say(text_undead_, 3);
+    player->Say(text_undead_, 3);
   }
 
   if(!spawned_wave_1_ && player_pos.x >= 647 - 8) {
     spawned_wave_1_ = true;
-    world.GetPlayer()->Say(text_wave_1_, 3);
+    player->Say(text_wave_1_, 3);
     SpawnWave1(world);
   }
 
@@ -65,7 +68,7 @@ void Level1::Update(float seconds_elapsed, World& world) {
 
   if(!mentioned_locked_chapel_ && player_pos.x >= 978 - 8) {
     mentioned_locked_chapel_ = true;
-    world.GetPlayer()->Say(text_locked_chapel_, 3);
+    player->Say(text_locked_chapel_, 3);
   }
 }
 
@@ -84,10 +87,12 @@ void Level1::SpawnWave2(World& world) {
   SpawnZombie(world, 871);
 }
 
-void Level1::SpawnZombie(World& world, int x) {
+Zombie* Level1::SpawnZombie(World& world, int x) {
   Zombie* z = new Zombie(resources_, *world.GetPlayer());
   z->SetState(z->state_rising_);
   z->position_.x = x - 8;
   z->position_.y = 16;
   world.Spawn(*z);
+
+  return z;
 }

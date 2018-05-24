@@ -37,7 +37,7 @@ class Level1 : public Level {
     void SpawnWave1(World& world);
     void SpawnWave2(World& world);
 
-    void SpawnZombie(World& world, int x);
+    Zombie* SpawnZombie(World& world, int x);
 };
 
 #endif // LEVEL1_H_
