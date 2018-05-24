@@ -5,6 +5,7 @@ class Zombie;
 
 class ZombieState {
   public:
+    virtual ~ZombieState() {}
     virtual void Initialize(Zombie& zombie) = 0;
     virtual void Update(float seconds_elapsed, Zombie& zombie) = 0;
 };

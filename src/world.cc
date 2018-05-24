@@ -6,7 +6,7 @@ World::World(Player& player, Collisions& collisions) :
 {}
 
 void World::Update(float seconds_elapsed) {
-  for(int i = 0; i < characters_.size(); i++) {
+  for(std::vector<Character*>::size_type i = 0; i < characters_.size(); i++) {
     characters_[i]->Update(seconds_elapsed);
   }
 }
@@ -25,7 +25,7 @@ void World::Spawn(Character& character) {
 }
 
 void World::Release() {
-  for(int i = 0; i < characters_.size(); i++) {
+  for(std::vector<Character*>::size_type i = 0; i < characters_.size(); i++) {
     delete characters_[i];
   }
 

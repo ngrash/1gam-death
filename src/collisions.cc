@@ -20,7 +20,7 @@ bool Collisions::DoesCollide(Character* character) {
   chb.h = character->hitbox_.h;
 
   SDL_Rect ohb;
-  for(int i = 0; i < collidables_.size(); i++) {
+  for(std::vector<Character*>::size_type i = 0; i < collidables_.size(); i++) {
     Character* other = collidables_[i];
 
     ohb.x = other->hitbox_.x + other->position_.x;
@@ -55,7 +55,7 @@ bool Collisions::DoCollide(Character* character, Character* other) {
 Character* Collisions::GetCharacterInLine(int x, int y, int direction, int max_distance) {
   Character* nearest = nullptr;
 
-  for(int i = 0; i < collidables_.size(); i++) {
+  for(std::vector<Character*>::size_type i = 0; i < collidables_.size(); i++) {
     Character* other = collidables_[i];
 
     SDL_Rect hitbox;

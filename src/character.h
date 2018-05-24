@@ -10,7 +10,7 @@
 class Character {
   public:
     Character();
-    ~Character();
+    virtual ~Character();
     Sprite* GetSprite();
     virtual void Update(float seconds_elapsed) = 0;
     Vector2f position_;

@@ -257,7 +257,7 @@ void Game::Render(Graphics& graphics) {
 #endif // DEBUG
 
   std::vector<Character*>* characters = world_->GetCharacters();
-  for(int i = 0; i < characters->size(); i++) {
+  for(std::vector<Character*>::size_type i = 0; i < characters->size(); i++) {
     Character* character = (*characters)[i];
     RenderCharacter(graphics, *character, camera_);
 

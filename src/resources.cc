@@ -3,9 +3,10 @@
 #include <SDL2/SDL_image.h>
 #include "logging.h"
 
-Resources::Resources(SDL_Renderer& renderer)
-  : textures_((int)Texture::_LAST_ELEMENT_, nullptr),
-    renderer_(renderer) {}
+Resources::Resources(SDL_Renderer& renderer) :
+  renderer_(renderer),
+  textures_((int)Texture::_LAST_ELEMENT_, nullptr)
+{}
 
 SDL_Texture *Resources::LoadTexture(Texture texture) {
   SDL_Texture *tex = nullptr;
@@ -52,6 +53,8 @@ SDL_Texture *Resources::LoadTexture(Texture texture) {
       break;
     case Texture::LEVEL_1:
       tex = LoadTexture("assets/lvl1.png");
+      break;
+    case Texture::_LAST_ELEMENT_:
       break;
   }
 

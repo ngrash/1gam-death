@@ -12,12 +12,12 @@
 #define PLAYER_WALKING_TEXTURE Texture::PLAYER_WALKING_W_SHOTGUN
 
 Player::Player(Resources& resources, Collisions& collisions) :
-  velocity_x_factor_(0),
-  resources_(resources),
   health_(3),
   shells_(0),
   reloading_(true),
-  collisions_(collisions)
+  resources_(resources),
+  collisions_(collisions),
+  velocity_x_factor_(0)
 {
   hitbox_.x = 5;
   hitbox_.y = 0;
