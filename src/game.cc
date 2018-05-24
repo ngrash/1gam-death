@@ -239,13 +239,17 @@ void Game::Render(Graphics& graphics) {
 
   graphics.RenderSprite(level_background_, 0, 0);
 
-  if(player_->shells_ >= 1) graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 60, -1);
-  if(player_->shells_ >= 2) graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 70, -1);
-  if(player_->shells_ >= 3) graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 80, -1);
-
   if(player_->health_ >= 1) graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 125, 0);
   if(player_->health_ >= 2) graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 135, 0);
   if(player_->health_ >= 3) graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 145, 0);
+
+  if(player_->reloading_) {
+    graphics.RenderSprite(player_->reloading_animation_, 62, 0);
+  } else {
+    if(player_->shells_ >= 1) graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 60, -1);
+    if(player_->shells_ >= 2) graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 70, -1);
+    if(player_->shells_ >= 3) graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 80, -1);
+  }
 
   RenderCharacter(graphics, *player_, camera_);
 #ifdef DEBUG

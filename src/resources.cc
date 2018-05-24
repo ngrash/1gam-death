@@ -17,6 +17,9 @@ SDL_Texture *Resources::LoadTexture(Texture texture) {
     case Texture::SHELL:
       tex = LoadTexture("assets/shell.png");
       break;
+    case Texture::RELOADING:
+      tex = LoadTexture("assets/reloading.png");
+      break;
     case Texture::PLAYER_IDLE:
       tex = LoadTexture("assets/player_idle.png");
       break;

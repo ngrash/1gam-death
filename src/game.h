@@ -1,6 +1,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#include "animation.h"
 #include "character.h"
 #include "collisions.h"
 #include "graphics.h"

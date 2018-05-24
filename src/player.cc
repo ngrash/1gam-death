@@ -4,6 +4,7 @@
 #define MAX_PLAYER_VELOCITY_Y 50
 #define FLOOR_Y 16
 
+#define WEAPON_RELOAD_TIME_S 2
 #define WEAPON_DISTANCE 80
 #define WEAPON_Y 9
 
@@ -14,7 +15,8 @@ Player::Player(Resources& resources, Collisions& collisions) :
   velocity_x_factor_(0),
   resources_(resources),
   health_(3),
-  shells_(3),
+  shells_(0),
+  reloading_(true),
   collisions_(collisions)
 {
   hitbox_.x = 5;
@@ -24,6 +26,16 @@ Player::Player(Resources& resources, Collisions& collisions) :
 
   animation_->frame_duration = 0.10;
   animation_->texture = resources_.GetTexture(PLAYER_IDLE_TEXTURE);
+
+  reloading_animation_ = new Animation();
+  reloading_animation_->texture = resources_.GetTexture(Texture::RELOADING);
+  reloading_animation_->src_rect.w = 32;
+  reloading_animation_->num_frames = 33;
+  reloading_animation_->frame_duration = WEAPON_RELOAD_TIME_S / (float)reloading_animation_->num_frames;
+}
+
+Player::~Player() {
+  delete reloading_animation_;
 }
 
 void Player::SetVelocityXFactor(float factor) {
@@ -65,6 +77,10 @@ void Player::Jump() {
 }
 
 void Player::Shot() {
+  if(reloading_) {
+    return;
+  }
+
   int direction = animation_->render_flip == SDL_FLIP_NONE ? 1 : -1;
   Character* enemy = collisions_.GetCharacterInLine(position_.x, position_.y + WEAPON_Y, direction, WEAPON_DISTANCE);
 
@@ -73,13 +89,25 @@ void Player::Shot() {
   }
 
   shells_--;
-  if(shells_ <= 0) {
-    shells_ = 3;
-  }
 }
 
 void Player::Update(float seconds_elapsed) {
   animation_->Update(seconds_elapsed);
+
+  if(shells_ <= 0 && !reloading_) {
+    reloading_ = true;
+    reload_duration_ = 0;
+    reloading_animation_->Reset();
+  }
+
+  if(reloading_) {
+    reloading_animation_->Update(seconds_elapsed);
+    reload_duration_ += seconds_elapsed;
+    if(reload_duration_ >= WEAPON_RELOAD_TIME_S) {
+      reloading_ = false;
+      shells_ = 3;
+    }
+  }
 
   velocity_.x += acceleration_.x * seconds_elapsed;
   velocity_.y += acceleration_.y * seconds_elapsed;

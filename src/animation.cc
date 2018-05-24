@@ -8,6 +8,8 @@ Animation::Animation()
   src_rect.y = 0;
   src_rect.w = 16;
   src_rect.h = 16;
+  current_frame_ = 0;
+  current_frame_duration_ = 0;
 }
 
 void Animation::Reset() {
@@ -26,7 +28,7 @@ void Animation::Update(float seconds_elapsed) {
         current_frame_ = 0;
       }
 
-      this->src_rect.x = current_frame_ * 16;
+      this->src_rect.x = current_frame_ * this->src_rect.w;
       current_frame_duration_ = 0;
     }
   }

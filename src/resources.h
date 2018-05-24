@@ -9,6 +9,7 @@
 enum class Texture {
   HEART,
   SHELL,
+  RELOADING,
   PLAYER_IDLE,
   PLAYER_IDLE_W_SHOTGUN,
   PLAYER_WALKING,
