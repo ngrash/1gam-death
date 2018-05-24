@@ -30,6 +30,7 @@ void Level1::Initialize(World& world) {
   player->position_.y = 16;
 
   player->Say(text_intro_, 5);
+  world.GetPlayer()->unarmed_ = true;
 }
 
 void Level1::Update(float seconds_elapsed, World& world) {
@@ -37,8 +38,8 @@ void Level1::Update(float seconds_elapsed, World& world) {
 
   if(!spawned_first_zombie_ && player_pos.x >= 299 - 8) {
     spawned_first_zombie_ = true;
-    // TODO: Say "What's this on the other side of the street? I'll better get prepared."
     world.GetPlayer()->Say(text_spotted_, 3);
+    world.GetPlayer()->unarmed_ = false;
     SpawnZombie(world, 580);
   }
 
@@ -49,7 +50,6 @@ void Level1::Update(float seconds_elapsed, World& world) {
 
   if(!spawned_wave_1_ && player_pos.x >= 647 - 8) {
     spawned_wave_1_ = true;
-    // TODO: Say "For hell's sake. The deads are after me."
     world.GetPlayer()->Say(text_wave_1_, 3);
     SpawnWave1(world);
   }

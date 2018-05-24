@@ -21,6 +21,7 @@ class Player : public Character {
     int health_;
     int shells_;
     bool reloading_;
+    bool unarmed_;
     Animation* reloading_animation_;
     std::string* text_;
     bool has_text_;
@@ -30,7 +31,7 @@ class Player : public Character {
     float velocity_x_factor_;
     float reload_duration_;
     float text_display_duration_target_;
-    float text_display_duration_;;
+    float text_display_duration_;
 };
 
 #endif // PLAYER_H_

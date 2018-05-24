@@ -8,13 +8,11 @@
 #define WEAPON_DISTANCE 80
 #define WEAPON_Y 9
 
-#define PLAYER_IDLE_TEXTURE Texture::PLAYER_IDLE_W_SHOTGUN
-#define PLAYER_WALKING_TEXTURE Texture::PLAYER_WALKING_W_SHOTGUN
-
 Player::Player(Resources& resources, Collisions& collisions) :
   health_(3),
   shells_(0),
-  reloading_(true),
+  reloading_(false),
+  unarmed_(false),
   text_(nullptr),
   has_text_(false),
   resources_(resources),
@@ -30,7 +28,7 @@ Player::Player(Resources& resources, Collisions& collisions) :
   hitbox_.w = 5;
 
   animation_->frame_duration = 0.10;
-  animation_->texture = resources_.GetTexture(PLAYER_IDLE_TEXTURE);
+  animation_->texture = resources_.GetTexture(Texture::PLAYER_IDLE);
 
   reloading_animation_ = new Animation();
   reloading_animation_->texture = resources_.GetTexture(Texture::RELOADING);
@@ -58,16 +56,22 @@ void Player::SetVelocityXFactor(float factor) {
     velocity_.x = MAX_PLAYER_VELOCITY_X * factor;
 
     animation_->Reset();
+  }
 
-    if(factor == 0) {
-      animation_->texture = resources_.GetTexture(PLAYER_IDLE_TEXTURE);
-      animation_->num_frames = 0;
-    } else if(factor > 0) {
-      animation_->texture = resources_.GetTexture(PLAYER_WALKING_TEXTURE);
+  if(factor == 0) {
+    Texture idle_texture = unarmed_ ? Texture::PLAYER_IDLE : Texture::PLAYER_IDLE_W_SHOTGUN;
+    animation_->texture = resources_.GetTexture(idle_texture);
+    animation_->num_frames = 0;
+  }
+  else {
+    Texture walking_texture = unarmed_ ? Texture::PLAYER_WALKING : Texture::PLAYER_WALKING_W_SHOTGUN;
+
+    if(factor > 0) {
+      animation_->texture = resources_.GetTexture(walking_texture);
       animation_->render_flip = SDL_FLIP_NONE;
       animation_->num_frames = 4;
     } else if(factor < 0) {
-      animation_->texture = resources_.GetTexture(PLAYER_WALKING_TEXTURE);
+      animation_->texture = resources_.GetTexture(walking_texture);
       animation_->render_flip = SDL_FLIP_HORIZONTAL;
       animation_->num_frames = 4;
     }
@@ -106,7 +110,7 @@ void Player::Say(std::string* text, float display_duration) {
 void Player::Update(float seconds_elapsed) {
   animation_->Update(seconds_elapsed);
 
-  if(shells_ <= 0 && !reloading_) {
+  if(shells_ <= 0 && !reloading_ && !unarmed_) {
     reloading_ = true;
     reload_duration_ = 0;
     reloading_animation_->Reset();
