@@ -15,6 +15,7 @@ class Graphics {
     Graphics(SDL_Renderer& renderer);
     void BeginRender();
     void EndRender();
+    void RenderTextCentered(const std::string& text, const int w, const int y);
     void RenderText(const std::string& text, const int x, const int y);;
     void RenderTexture(SDL_Texture* texture, const int x, const int y);
     void RenderSprite(Sprite* sprite, const int x, const int y);

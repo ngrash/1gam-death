@@ -268,6 +268,10 @@ void Game::Render(Graphics& graphics) {
 #endif // DEBUG
   }
 
+  if(player_->has_text_) {
+    graphics.RenderTextCentered(*player_->text_, SCREEN_WIDTH, 20);
+  }
+
   graphics.RenderText("100", 4, 0);
 
   graphics.EndRender();

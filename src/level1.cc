@@ -5,13 +5,19 @@ Level1::Level1(Resources& resources) :
   resources_(resources),
   spawned_first_zombie_(false),
   spawned_wave_1_(false),
-  spawned_wave_2_(false)
-{}
+  spawned_wave_2_(false),
+  mentioned_undead_(false)
+{
+  text_intro_ = new std::string("I've come to purge this place.");
+  text_spotted_ = new std::string("What's moving over there?");
+  text_wave_1_ = new std::string("For hell's sake!");
+  text_undead_ = new std::string("Undead!");
+}
 
 Level1::~Level1() {
-  if(first_zombie_ != nullptr) {
-    delete first_zombie_;
-  }
+  delete text_intro_;
+  delete text_spotted_;
+  delete text_wave_1_;
 }
 
 Texture Level1::GetBackgroundTexture() {
@@ -22,6 +28,8 @@ void Level1::Initialize(World& world) {
   Player* player = world.GetPlayer();
   player->position_.x = 16;
   player->position_.y = 16;
+
+  player->Say(text_intro_, 5);
 }
 
 void Level1::Update(float seconds_elapsed, World& world) {
@@ -30,12 +38,19 @@ void Level1::Update(float seconds_elapsed, World& world) {
   if(!spawned_first_zombie_ && player_pos.x >= 299 - 8) {
     spawned_first_zombie_ = true;
     // TODO: Say "What's this on the other side of the street? I'll better get prepared."
+    world.GetPlayer()->Say(text_spotted_, 3);
     SpawnZombie(world, 580);
   }
 
+  if(!mentioned_undead_ && player_pos.x >= 450) {
+    mentioned_undead_ = true;
+    world.GetPlayer()->Say(text_undead_, 3);
+  }
+
   if(!spawned_wave_1_ && player_pos.x >= 647 - 8) {
-    // TODO: Say "For hell's sake. The deads are after me."
     spawned_wave_1_ = true;
+    // TODO: Say "For hell's sake. The deads are after me."
+    world.GetPlayer()->Say(text_wave_1_, 3);
     SpawnWave1(world);
   }
 

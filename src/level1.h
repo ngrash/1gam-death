@@ -2,6 +2,7 @@
 #define LEVEL1_H_
 
 #include <vector>
+#include <string>
 
 #include "level.h"
 #include "resources.h"
@@ -21,9 +22,15 @@ class Level1 : public Level {
     Resources& resources_;
     Zombie* first_zombie_;
 
+    std::string* text_intro_;
+    std::string* text_spotted_;
+    std::string* text_wave_1_;
+    std::string* text_undead_;
+
     bool spawned_first_zombie_;
     bool spawned_wave_1_;
     bool spawned_wave_2_;
+    bool mentioned_undead_;
 
     void SpawnWave1(World& world);
     void SpawnWave2(World& world);

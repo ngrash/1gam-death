@@ -15,9 +15,14 @@ Player::Player(Resources& resources, Collisions& collisions) :
   health_(3),
   shells_(0),
   reloading_(true),
+  text_(nullptr),
+  has_text_(false),
   resources_(resources),
   collisions_(collisions),
-  velocity_x_factor_(0)
+  velocity_x_factor_(0),
+  reload_duration_(0),
+  text_display_duration_target_(0),
+  text_display_duration_(0)
 {
   hitbox_.x = 5;
   hitbox_.y = 0;
@@ -91,6 +96,13 @@ void Player::Shot() {
   shells_--;
 }
 
+void Player::Say(std::string* text, float display_duration) {
+  has_text_ = text != nullptr;
+  text_ = text;
+  text_display_duration_target_ = display_duration;
+  text_display_duration_ = 0;
+}
+
 void Player::Update(float seconds_elapsed) {
   animation_->Update(seconds_elapsed);
 
@@ -106,6 +118,13 @@ void Player::Update(float seconds_elapsed) {
     if(reload_duration_ >= WEAPON_RELOAD_TIME_S) {
       reloading_ = false;
       shells_ = 3;
+    }
+  }
+
+  if(has_text_) {
+    text_display_duration_ += seconds_elapsed;
+    if(text_display_duration_ >= text_display_duration_target_) {
+      Say(nullptr, 0);
     }
   }
 

@@ -25,6 +25,27 @@ void Graphics::EndRender() {
   SDL_RenderPresent(&renderer_);
 }
 
+void Graphics::RenderTextCentered(const std::string& text, const int w, const int y) {
+  SDL_Color color = {50, 50, 50};
+  SDL_Surface* surface = TTF_RenderText_Solid(font_, text.c_str(), color);
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(&renderer_, surface);
+  SDL_FreeSurface(surface);
+
+  SDL_Rect dst;
+
+  SDL_QueryTexture(texture, NULL, NULL, &dst.w, &dst.h);
+
+  dst.x = ((w / 2.0) - (dst.w / 2.0)) * GAME_SCALE;
+  dst.y = y * GAME_SCALE;
+
+  dst.w *= GAME_SCALE;
+  dst.h *= GAME_SCALE;
+
+  SDL_RenderCopy(&renderer_, texture, NULL, &dst);
+
+  SDL_DestroyTexture(texture);
+}
+
 void Graphics::RenderText(const std::string& text, const int x, const int y) {
   SDL_Color color = {50, 50, 50};
   SDL_Surface* surface = TTF_RenderText_Solid(font_, text.c_str(), color);
