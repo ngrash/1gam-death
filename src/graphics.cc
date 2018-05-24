@@ -5,7 +5,7 @@
 Graphics::Graphics(SDL_Renderer& renderer)
   : renderer_(renderer)
 {
-  font_ = TTF_OpenFont("assets/fonts/alterebro-pixel-font.ttf", 16 * GAME_SCALE);
+  font_ = TTF_OpenFont("assets/fonts/alterebro-pixel-font.ttf", 16);
   if(font_ == NULL) {
     logSDLError("TTF_OpenFont");
   }
@@ -36,6 +36,10 @@ void Graphics::RenderText(const std::string& text, const int x, const int y) {
   dst.y = y * GAME_SCALE;
 
   SDL_QueryTexture(texture, NULL, NULL, &dst.w, &dst.h);
+
+  dst.w *= GAME_SCALE;
+  dst.h *= GAME_SCALE;
+
   SDL_RenderCopy(&renderer_, texture, NULL, &dst);
 
   SDL_DestroyTexture(texture);
