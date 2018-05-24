@@ -209,6 +209,11 @@ void Game::HandleInput() {
               player_->Jump();
             }
             break;
+          case SDLK_k:
+            if(!event.key.repeat) {
+              player_->Shot();
+            }
+            break;
         }
         break;
       case SDL_KEYUP:
@@ -234,9 +239,9 @@ void Game::Render(Graphics& graphics) {
 
   graphics.RenderSprite(level_background_, 0, 0);
 
-  graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 60, -1);
-  graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 70, -1);
-  graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 80, -1);
+  if(player_->shells_ >= 1) graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 60, -1);
+  if(player_->shells_ >= 2) graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 70, -1);
+  if(player_->shells_ >= 3) graphics.RenderTexture(resources_->GetTexture(Texture::SHELL), 80, -1);
 
   if(player_->health_ >= 1) graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 125, 0);
   if(player_->health_ >= 2) graphics.RenderTexture(resources_->GetTexture(Texture::HEART), 135, 0);

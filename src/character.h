@@ -15,6 +15,7 @@ class Character {
     virtual void Update(float seconds_elapsed) = 0;
     Vector2f position_;
     SDL_Rect hitbox_;
+    int health_;
   protected:
     Animation* animation_;
     Vector2f acceleration_;

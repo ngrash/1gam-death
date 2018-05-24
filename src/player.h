@@ -12,7 +12,9 @@ class Player : public Character {
     void Update(float seconds_elapsed);
     void SetVelocityXFactor(float factor);
     void Jump();
+    void Shot();
     int health_;
+    int shells_;
   private:
     Resources& resources_;
     Collisions& collisions_;

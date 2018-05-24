@@ -13,6 +13,7 @@ class Collisions {
     void AddCollidable(Character* character);
     bool DoesCollide(Character* character);
     bool DoCollide(Character* character, Character* other);
+    Character* GetCharacterInLine(int x, int y, int direction, int max_distance);
   private:
     std::vector<Character*> collidables_;
 

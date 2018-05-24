@@ -41,6 +41,12 @@ SDL_Texture *Resources::LoadTexture(Texture texture) {
     case Texture::ZOMBIE_ATTACKING:
       tex = LoadTexture("assets/zombie_attacking.png");
       break;
+    case Texture::ZOMBIE_DYING:
+      tex = LoadTexture("assets/zombie_dying.png");
+      break;
+    case Texture::ZOMBIE_DEAD:
+      tex = LoadTexture("assets/zombie_dead.png");
+      break;
     case Texture::LEVEL_1:
       tex = LoadTexture("assets/lvl1.png");
       break;

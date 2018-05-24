@@ -6,6 +6,8 @@ Zombie::Zombie(Resources& resources, Player& player) :
   player_(player),
   resources_(resources)
 {
+  health_ = 1;
+
   hitbox_.x = 3;
   hitbox_.y = 0;
   hitbox_.w = 10;
@@ -15,6 +17,8 @@ Zombie::Zombie(Resources& resources, Player& player) :
   state_rising_ = new ZombieStateRising();
   state_chasing_ = new ZombieStateChasing();
   state_attacking_ = new ZombieStateAttacking();
+  state_dying_ = new ZombieStateDying();
+  state_dead_ = new ZombieStateDead();
 
   SetState(state_asleep_);
 }
@@ -32,6 +36,10 @@ void Zombie::SetState(ZombieState* state) {
 }
 
 void Zombie::Update(float seconds_elapsed) {
+  if(health_ <= 0 && current_state_ != state_dying_ && current_state_ != state_dead_) {
+    SetState(state_dying_);
+  }
+
   current_state_->Update(seconds_elapsed, *this);
 }
 

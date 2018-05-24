@@ -1,5 +1,5 @@
-#ifndef ZOMBIE_STATE_ASLEEP
-#define ZOMBIE_STATE_ASLEEP
+#ifndef ZOMBIE_STATE_ASLEEP_H_
+#define ZOMBIE_STATE_ASLEEP_H_
 
 #include "zombie_state.h"
 
@@ -9,4 +9,4 @@ class ZombieStateAsleep : public ZombieState {
     void Update(float seconds_elapsed, Zombie& zombie);
 };
 
-#endif
+#endif // ZOMBIE_STATE_ASLEEP_H_

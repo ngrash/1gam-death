@@ -1,6 +1,7 @@
 #include "character.h"
 
 Character::Character() {
+  health_ = 0;
   animation_ = new Animation();
   acceleration_ = {};
   velocity_ = {};

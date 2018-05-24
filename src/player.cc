@@ -4,6 +4,9 @@
 #define MAX_PLAYER_VELOCITY_Y 50
 #define FLOOR_Y 16
 
+#define WEAPON_DISTANCE 80
+#define WEAPON_Y 9
+
 #define PLAYER_IDLE_TEXTURE Texture::PLAYER_IDLE_W_SHOTGUN
 #define PLAYER_WALKING_TEXTURE Texture::PLAYER_WALKING_W_SHOTGUN
 
@@ -11,6 +14,7 @@ Player::Player(Resources& resources, Collisions& collisions) :
   velocity_x_factor_(0),
   resources_(resources),
   health_(3),
+  shells_(3),
   collisions_(collisions)
 {
   hitbox_.x = 5;
@@ -57,6 +61,20 @@ void Player::Jump() {
   if(position_.y == FLOOR_Y) {
     velocity_.y = 200;
     acceleration_.y = -700;
+  }
+}
+
+void Player::Shot() {
+  int direction = animation_->render_flip == SDL_FLIP_NONE ? 1 : -1;
+  Character* enemy = collisions_.GetCharacterInLine(position_.x, position_.y + WEAPON_Y, direction, WEAPON_DISTANCE);
+
+  if(enemy != nullptr) {
+    enemy->health_--;
+  }
+
+  shells_--;
+  if(shells_ <= 0) {
+    shells_ = 3;
   }
 }
 
