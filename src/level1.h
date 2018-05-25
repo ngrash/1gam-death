@@ -27,15 +27,23 @@ class Level1 : public Level {
     std::string* text_wave_1_;
     std::string* text_undead_;
     std::string* text_locked_chapel_;
+    std::string* text_gargoyle_;
+    std::string* text_crypta_;
 
     bool spawned_first_zombie_;
     bool spawned_wave_1_;
     bool spawned_wave_2_;
+    bool spawned_wave_3_;
+    bool spawned_wave_4_;
     bool mentioned_undead_;
     bool mentioned_locked_chapel_;
+    bool mentioned_gargoyle_;
+    bool mentioned_crypta_;
 
     void SpawnWave1(World& world);
     void SpawnWave2(World& world);
+    void SpawnWave3(World& world);
+    void SpawnWave4(World& world);
 
     Zombie* SpawnZombie(World& world, int x);
 };

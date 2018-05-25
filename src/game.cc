@@ -157,8 +157,8 @@ void Game::Update(float seconds_elapsed) {
     player_->position_.x = 0;
   }
 
-  if(player_pos.x >= level_width_ - 36) {
-    player_->position_.x = level_width_ - 36;
+  if(player_pos.x >= level_width_ - 53) {
+    player_->position_.x = level_width_ - 53;
   }
 
   // Make the camera follow the player
