@@ -54,6 +54,9 @@ SDL_Texture *Resources::LoadTexture(Texture texture) {
     case Texture::LEVEL_1:
       tex = LoadTexture("assets/lvl1.png");
       break;
+    case Texture::LEVEL_1_INTRO:
+      tex = LoadTexture("assets/lvl1_intro.png");
+      break;
     case Texture::_LAST_ELEMENT_:
       break;
   }

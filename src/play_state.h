@@ -16,6 +16,7 @@ class PlayState : public State {
   public:
     PlayState(Resources& resources, int screen_width, int screen_height);
     ~PlayState();
+    void Initialize(StateManager& state_manager);
     void Update(StateManager& state_manager, float seconds_elapsed);
     void Draw(Graphics& graphics);
     void HandleEvent(StateManager& state_manager, SDL_Event& event);

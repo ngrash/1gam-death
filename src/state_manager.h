@@ -14,6 +14,7 @@ class StateManager {
     ~StateManager();
 
     void PushState(State* state);
+    void PopState();
 
     void HandleEvent(SDL_Event& event);
     void Update(float seconds_elapsed);

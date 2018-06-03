@@ -37,6 +37,10 @@ Texture Level1::GetBackgroundTexture() {
   return Texture::LEVEL_1;
 }
 
+Texture Level1::GetIntroTexture() {
+  return Texture::LEVEL_1_INTRO;
+}
+
 void Level1::Initialize(World& world) {
   Player* player = world.GetPlayer();
   player->position_.x = 16;

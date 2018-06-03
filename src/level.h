@@ -8,6 +8,7 @@ class Level {
   public:
     virtual ~Level() {}
     virtual Texture GetBackgroundTexture() = 0;
+    virtual Texture GetIntroTexture() = 0;
     virtual void Initialize(World& world) {}
     virtual void Update(float seconds_elapsed, World& world) = 0;
 };

@@ -1,6 +1,7 @@
 #include "play_state.h"
 
 #include "level1.h"
+#include "level_intro_state.h"
 #include "logging.h"
 #include "state_manager.h"
 
@@ -41,6 +42,13 @@ PlayState::~PlayState() {
   delete level_;
   delete level_background_;
   delete collisions_;
+}
+
+void PlayState::Initialize(StateManager& state_manager) {
+  Texture level_intro = level_->GetIntroTexture();
+  SDL_Texture* texture = resources_.GetTexture(level_intro);
+
+  state_manager.PushState(new LevelIntroState(texture));
 }
 
 void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {

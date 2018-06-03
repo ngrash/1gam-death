@@ -16,6 +16,7 @@ class Level1 : public Level {
     ~Level1();
 
     Texture GetBackgroundTexture();
+    Texture GetIntroTexture();
     void Initialize(World& world);
     void Update(float seconds_elapsed, World& world);
   private:

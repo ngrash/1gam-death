@@ -15,6 +15,12 @@ StateManager::~StateManager() {
 
 void StateManager::PushState(State* state) {
   states_.push_back(state);
+  state->Initialize(*this);
+}
+
+void StateManager::PopState() {
+  delete states_.back();
+  states_.pop_back();
 }
 
 void StateManager::HandleEvent(SDL_Event& event) {
