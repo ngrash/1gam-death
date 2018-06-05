@@ -8,6 +8,7 @@
 
 enum class Sample {
   NO_AMMO,
+  SHOT,
   _LAST_ELEMENT_
 };
 

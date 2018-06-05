@@ -14,6 +14,8 @@ Mix_Chunk* Sound::LoadSample(Sample sample) {
   switch(sample) {
     case Sample::NO_AMMO:
       return LoadSample("assets/no_ammo.wav");
+    case Sample::SHOT:
+      return LoadSample("assets/shot.wav");
     case Sample::_LAST_ELEMENT_:
     default:
       return nullptr;

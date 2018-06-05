@@ -158,8 +158,12 @@ void PlayState::HandleEvent(StateManager& state_manager, SDL_Event& event) {
           if(!event.key.repeat) {
             player_->Shot();
 
-            if(player_->reloading_ && !player_->unarmed_) {
-              sound_.PlaySample(Sample::NO_AMMO);
+            if(!player_->unarmed_) {
+              if(player_->reloading_) {
+                sound_.PlaySample(Sample::NO_AMMO);
+              } else {
+                sound_.PlaySample(Sample::SHOT);
+              }
             }
           }
           break;
