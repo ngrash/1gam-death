@@ -4,6 +4,7 @@
 #include <string>
 
 void logSDLError(const std::string& msg);
+void logMixError(const std::string& msg);
 
 #ifdef DEBUG
 void logDebug(const std::string& msg);

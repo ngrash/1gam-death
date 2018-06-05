@@ -5,8 +5,9 @@
 #include "logging.h"
 #include "state_manager.h"
 
-PlayState::PlayState(Resources& resources, int screen_width, int screen_height) :
+PlayState::PlayState(Resources& resources, Sound& sound, int screen_width, int screen_height) :
   resources_(resources),
+  sound_(sound),
   screen_width_(screen_width),
   screen_height_(screen_height),
   player_velocity_x_(0)
@@ -156,6 +157,10 @@ void PlayState::HandleEvent(StateManager& state_manager, SDL_Event& event) {
         case SDLK_k:
           if(!event.key.repeat) {
             player_->Shot();
+
+            if(player_->reloading_ && !player_->unarmed_) {
+              sound_.PlaySample(Sample::NO_AMMO);
+            }
           }
           break;
       }

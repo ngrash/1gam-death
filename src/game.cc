@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "SDL2/SDL_image.h"
+#include "SDL2/SDL_mixer.h"
 
 #include "logging.h"
 #include "vector2f.h"
@@ -26,7 +27,7 @@ Game::Game()
 {}
 
 bool Game::Init() {
-  if(SDL_Init(SDL_INIT_VIDEO) != 0) {
+  if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
     logSDLError("SDL_Init");
     return false;
   }
@@ -66,11 +67,18 @@ bool Game::Init() {
     return false;
   }
 
+  if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096) == -1) {
+    logMixError("Mix_OpenAudio");
+    return false;
+  }
+
+  sound_ = new Sound();
+
   resources_ = new Resources(*renderer_);
   graphics_ = new Graphics(*renderer_);
 
   state_manager_ = new StateManager();
-  state_manager_->PushState(new PlayState(*resources_, SCREEN_WIDTH, SCREEN_HEIGHT));
+  state_manager_->PushState(new PlayState(*resources_, *sound_, SCREEN_WIDTH, SCREEN_HEIGHT));
 
   logDebug("Game::Init() successful");
 
@@ -80,6 +88,7 @@ bool Game::Init() {
 void Game::Quit() {
   resources_->DestroyTextures();
   delete state_manager_;
+  delete sound_;
   delete graphics_;
   delete resources_;
 
@@ -91,6 +100,7 @@ void Game::Quit() {
     SDL_DestroyWindow(window_);
   }
 
+  Mix_Quit();
   TTF_Quit();
   IMG_Quit();
   SDL_Quit();

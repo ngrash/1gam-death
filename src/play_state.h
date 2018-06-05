@@ -3,18 +3,19 @@
 
 #include "SDL2/SDL.h"
 
-#include "graphics.h"
-#include "state.h"
 #include "animation.h"
 #include "character.h"
 #include "collisions.h"
-#include "player.h"
-#include "vector2f.h"
+#include "graphics.h"
 #include "level.h"
+#include "player.h"
+#include "sound.h"
+#include "state.h"
+#include "vector2f.h"
 
 class PlayState : public State {
   public:
-    PlayState(Resources& resources, int screen_width, int screen_height);
+    PlayState(Resources& resources, Sound& sound, int screen_width, int screen_height);
     ~PlayState();
     void Initialize(StateManager& state_manager);
     void Update(StateManager& state_manager, float seconds_elapsed);
@@ -23,6 +24,7 @@ class PlayState : public State {
 
   private:
     Resources& resources_;
+    Sound& sound_;
     int screen_width_;
     int screen_height_;
 

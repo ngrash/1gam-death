@@ -3,6 +3,7 @@
 
 #include "graphics.h"
 #include "resources.h"
+#include "sound.h"
 #include "state_manager.h"
 
 class Game {
@@ -14,6 +15,7 @@ class Game {
 
   private:
     Resources* resources_;
+    Sound* sound_;
     Graphics* graphics_;
     StateManager* state_manager_;
     SDL_Renderer* renderer_;
