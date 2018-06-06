@@ -24,7 +24,13 @@ void StateManager::PopState() {
 }
 
 void StateManager::HandleEvent(SDL_Event& event) {
-  states_.back()->HandleEvent(*this, event);
+  if(event.type == SDL_QUIT
+     || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)) {
+    Quit();
+  }
+  else {
+    states_.back()->HandleEvent(*this, event);
+  }
 }
 
 void StateManager::Update(float seconds_elapsed) {

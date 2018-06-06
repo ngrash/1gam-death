@@ -22,6 +22,7 @@ enum class Texture {
   ZOMBIE_DEAD,
   LEVEL_1,
   LEVEL_1_INTRO,
+  GAME_OVER,
   _LAST_ELEMENT_
 };
 

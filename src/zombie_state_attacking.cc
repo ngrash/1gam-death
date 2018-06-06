@@ -24,12 +24,7 @@ void ZombieStateAttacking::Update(float seconds_elapsed, Zombie& zombie) {
 
     if(zombie.GetDistanceToPlayer() <= ATTACK_RANGE
        && zombie.player_.position_.y <= ATTACK_HEIGHT) {
-
       zombie.player_.health_ -= 1;
-
-      if(zombie.player_.health_ <= 0) {
-        zombie.player_.health_ = 3;
-      }
     }
   }
 

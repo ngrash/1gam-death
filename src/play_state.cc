@@ -4,6 +4,7 @@
 #include "level_intro_state.h"
 #include "logging.h"
 #include "state_manager.h"
+#include "game_over_state.h"
 
 PlayState::PlayState(Resources& resources, Sound& sound, int screen_width, int screen_height) :
   resources_(resources),
@@ -53,6 +54,10 @@ void PlayState::Initialize(StateManager& state_manager) {
 }
 
 void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
+  if(player_->health_ <= 0) {
+    state_manager.PushState(new GameOverState(resources_, player_->score_));
+  }
+
   player_->SetVelocityXFactor(player_velocity_x_);
   player_->Update(seconds_elapsed);
 
@@ -127,9 +132,6 @@ void PlayState::Draw(Graphics& graphics) {
 
 void PlayState::HandleEvent(StateManager& state_manager, SDL_Event& event) {
   switch(event.type) {
-    case SDL_QUIT:
-      state_manager.Quit();
-      break;
     case SDL_KEYDOWN:
       switch(event.key.keysym.sym) {
         case SDLK_ESCAPE:
