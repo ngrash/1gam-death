@@ -62,7 +62,7 @@ void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
   player_->Update(seconds_elapsed);
 
   world_->Update(seconds_elapsed);
-  level_->Update(seconds_elapsed, *world_);
+  level_->Update(seconds_elapsed, *world_, state_manager);
 
   Vector2f player_pos = player_->position_;
 

@@ -60,6 +60,9 @@ SDL_Texture *Resources::LoadTexture(Texture texture) {
     case Texture::GAME_OVER:
       tex = LoadTexture("assets/game_over.png");
       break;
+    case Texture::CREDITS:
+      tex = LoadTexture("assets/credits.png");
+      break;
     case Texture::_LAST_ELEMENT_:
       break;
   }

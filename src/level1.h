@@ -18,7 +18,7 @@ class Level1 : public Level {
     Texture GetBackgroundTexture();
     Texture GetIntroTexture();
     void Initialize(World& world);
-    void Update(float seconds_elapsed, World& world);
+    void Update(float seconds_elapsed, World& world, StateManager& state_manager);
   private:
     Resources& resources_;
     Zombie* first_zombie_;

@@ -23,6 +23,7 @@ enum class Texture {
   LEVEL_1,
   LEVEL_1_INTRO,
   GAME_OVER,
+  CREDITS,
   _LAST_ELEMENT_
 };
 

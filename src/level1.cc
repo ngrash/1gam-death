@@ -1,5 +1,7 @@
 #include "level1.h"
+
 #include "vector2f.h"
+#include "credits_state.h"
 
 Level1::Level1(Resources& resources) :
   resources_(resources),
@@ -43,14 +45,14 @@ Texture Level1::GetIntroTexture() {
 
 void Level1::Initialize(World& world) {
   Player* player = world.GetPlayer();
-  player->position_.x = 16;
+  player->position_.x = 1800;
   player->position_.y = 16;
 
   player->Say(text_intro_, 5);
   world.GetPlayer()->unarmed_ = true;
 }
 
-void Level1::Update(float seconds_elapsed, World& world) {
+void Level1::Update(float seconds_elapsed, World& world, StateManager& state_manager) {
   Vector2f player_pos = world.GetPlayer()->position_;
   Player* player = world.GetPlayer();
 
@@ -101,6 +103,10 @@ void Level1::Update(float seconds_elapsed, World& world) {
   if(!mentioned_crypta_ && player_pos.x >= 1804 - 8) {
     mentioned_crypta_ = true;
     player->Say(text_crypta_, 3);
+  }
+
+  if(player_pos.x >= 1836 && player_pos.x <= 1847 + 8 && player_pos.y <= 101) {
+    state_manager.PushState(new CreditsState(resources_));
   }
 }
 
