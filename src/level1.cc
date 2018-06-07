@@ -45,7 +45,7 @@ Texture Level1::GetIntroTexture() {
 
 void Level1::Initialize(World& world) {
   Player* player = world.GetPlayer();
-  player->position_.x = 1800;
+  player->position_.x = 16;
   player->position_.y = 16;
 
   player->Say(text_intro_, 5);
