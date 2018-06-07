@@ -9,10 +9,11 @@
 #include "sprite.h"
 #include "world.h"
 #include "zombie.h"
+#include "sound.h"
 
 class Level1 : public Level {
   public:
-    Level1(Resources& resources);;
+    Level1(Resources& resources, Sound& sound);
     ~Level1();
 
     Texture GetBackgroundTexture();
@@ -21,6 +22,7 @@ class Level1 : public Level {
     void Update(float seconds_elapsed, World& world, StateManager& state_manager);
   private:
     Resources& resources_;
+    Sound& sound_;
     Zombie* first_zombie_;
 
     std::string* text_intro_;

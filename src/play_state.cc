@@ -21,7 +21,7 @@ PlayState::PlayState(Resources& resources, Sound& sound, int screen_width, int s
   player_ = new Player(resources_, *collisions_);
   world_ = new World(*player_, *collisions_);
 
-  level_ = new Level1(resources_);
+  level_ = new Level1(resources_, sound_);
   level_->Initialize(*world_);
 
   Texture level_texture = level_->GetBackgroundTexture();

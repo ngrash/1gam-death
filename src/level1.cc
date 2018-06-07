@@ -3,8 +3,9 @@
 #include "vector2f.h"
 #include "credits_state.h"
 
-Level1::Level1(Resources& resources) :
+Level1::Level1(Resources& resources, Sound& sound) :
   resources_(resources),
+  sound_(sound),
   first_zombie_(nullptr),
   spawned_first_zombie_(false),
   spawned_wave_1_(false),
@@ -50,6 +51,8 @@ void Level1::Initialize(World& world) {
 
   player->Say(text_intro_, 5);
   world.GetPlayer()->unarmed_ = true;
+
+  sound_.PlayMusic(Music::LEVEL_1_LOOP);
 }
 
 void Level1::Update(float seconds_elapsed, World& world, StateManager& state_manager) {
