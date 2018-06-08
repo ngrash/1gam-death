@@ -54,7 +54,9 @@ void PlayState::Initialize(StateManager& state_manager) {
 }
 
 void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
-  if(player_->health_ <= 0) {
+  int player_health = player_->health_;
+
+  if(player_health <= 0) {
     state_manager.PushState(new GameOverState(resources_, player_->score_));
   }
 
@@ -63,6 +65,11 @@ void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
 
   world_->Update(seconds_elapsed);
   level_->Update(seconds_elapsed, *world_, state_manager);
+
+  // Player took damage
+  if(player_health != player_->health_) {
+    sound_.PlaySample(Sample::DAMAGE);
+  }
 
   Vector2f player_pos = player_->position_;
 
