@@ -1,6 +1,7 @@
 #include "play_state.h"
 
 #include "level1.h"
+#include "level2.h"
 #include "level_intro_state.h"
 #include "logging.h"
 #include "state_manager.h"
@@ -11,31 +12,16 @@ PlayState::PlayState(Resources& resources, Sound& sound, int screen_width, int s
   sound_(sound),
   screen_width_(screen_width),
   screen_height_(screen_height),
-  player_velocity_x_(0)
+  player_velocity_x_(0),
+  level_(nullptr),
+  level_background_(nullptr)
 {
-  camera_.x = 0;
   camera_.y = 0;
 
   collisions_ = new Collisions();
 
   player_ = new Player(resources_, *collisions_);
   world_ = new World(*player_, *collisions_);
-
-  level_ = new Level1(resources_, sound_);
-  level_->Initialize(*world_);
-
-  Texture level_texture = level_->GetBackgroundTexture();
-
-  level_background_= new Sprite();
-  level_background_->texture = resources_.GetTexture(level_texture);
-  level_background_->src_rect.x = 0;
-  level_background_->src_rect.y = 0;
-  level_background_->src_rect.w = screen_width_;
-  level_background_->src_rect.h = screen_height_;
-
-  if(SDL_QueryTexture(level_background_->texture, NULL, NULL, &level_width_, NULL) < 0) {
-    logSDLError("SDL_QueryTexture");
-  }
 }
 
 PlayState::~PlayState() {
@@ -46,11 +32,66 @@ PlayState::~PlayState() {
   delete collisions_;
 }
 
-void PlayState::Initialize(StateManager& state_manager) {
+void PlayState::LoadNextLevel(StateManager& state_manager) {
+  player_velocity_x_ = 0;
+
+  int level_number = 0;
+  if(level_ != nullptr) {
+    level_number = level_->GetNumber();
+  }
+
+  Level* next_level;
+  switch(level_number) {
+    case 0:
+      logDebug("LoadNextLevel: Level1");
+      next_level = new Level1(resources_, sound_);
+      break;
+    case 1:
+      logDebug("LoadNextLevel: Level2");
+      next_level = new Level2(resources_, sound_);
+      break;
+  }
+
+  LoadLevel(state_manager, next_level);
+}
+
+void PlayState::LoadLevel(StateManager& state_manager, Level* level) {
+  world_->Release();
+
+  if(level_ != nullptr) {
+    delete level_;
+    level_ = nullptr;
+  }
+
+  if(level_background_ != nullptr) {
+    delete level_background_;
+    level_background_ = nullptr;
+  }
+
+  level_ = level;
+  Texture level_texture = level_->GetBackgroundTexture();
+
+  level_background_= new Sprite();
+  level_background_->texture = resources_.GetTexture(level_texture);
+  level_background_->src_rect.x = 0;
+  level_background_->src_rect.y = 0;
+  level_background_->src_rect.w = screen_width_;
+  level_background_->src_rect.h = screen_height_;
+
+  if(SDL_QueryTexture(level_background_->texture, NULL, NULL, &(world_->level_width_), NULL) < 0) {
+    logSDLError("SDL_QueryTexture");
+  }
+
+  level_->Initialize(*world_);
+
   Texture level_intro = level_->GetIntroTexture();
   SDL_Texture* texture = resources_.GetTexture(level_intro);
-
   state_manager.PushState(new LevelIntroState(texture));
+}
+
+void PlayState::Initialize(StateManager& state_manager) {
+  logDebug("PlayState::Initialize");
+  LoadNextLevel(state_manager);
 }
 
 void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
@@ -65,6 +106,10 @@ void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
 
   world_->Update(seconds_elapsed);
   level_->Update(seconds_elapsed, *world_, state_manager);
+  if(level_->IsLevelOver()) {
+    LoadNextLevel(state_manager);
+    return;
+  }
 
   // Player took damage
   if(player_health != player_->health_) {
@@ -78,16 +123,16 @@ void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
     player_->position_.x = 0;
   }
 
-  if(player_pos.x >= level_width_ - 53) {
-    player_->position_.x = level_width_ - 53;
+  if(player_pos.x >= world_->level_width_ - 53) {
+    player_->position_.x = world_->level_width_ - 53;
   }
 
   // Make the camera follow the player
   if(player_pos.x > ((screen_width_ / 2) - 8)) {
-    if(player_pos.x < level_width_ - ((screen_width_ / 2) + 8)) {
+    if(player_pos.x < world_->level_width_ - ((screen_width_ / 2) + 8)) {
       camera_.x = player_pos.x - (screen_width_ / 2) + 8;
     } else {
-      camera_.x = level_width_ - screen_width_;
+      camera_.x = world_->level_width_ - screen_width_;
     }
   }
   else {

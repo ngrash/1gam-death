@@ -20,6 +20,8 @@ class Level1 : public Level {
     Texture GetIntroTexture();
     void Initialize(World& world);
     void Update(float seconds_elapsed, World& world, StateManager& state_manager);
+    int GetNumber();
+    bool IsLevelOver();
   private:
     Resources& resources_;
     Sound& sound_;
@@ -42,6 +44,8 @@ class Level1 : public Level {
     bool mentioned_locked_chapel_;
     bool mentioned_gargoyle_;
     bool mentioned_crypta_;
+
+    bool level_over_;
 
     void SpawnWave1(World& world);
     void SpawnWave2(World& world);

@@ -29,6 +29,8 @@ Mix_Music* Sound::LoadMusic(Music music) {
   switch(music) {
     case Music::LEVEL_1_LOOP:
       return LoadMusic("assets/lvl1_loop.wav");
+    case Music::LEVEL_2_LOOP:
+      return LoadMusic("assets/lvl2_loop.wav");
     case Music::_LAST_ELEMENT_:
     default:
       return nullptr;

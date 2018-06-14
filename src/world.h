@@ -15,6 +15,7 @@ class World {
     void Release();
     void Update(float seconds_elapsed);
     std::vector<Character*>* GetCharacters();
+    int level_width_;
   private:
     Player& player_;
     Collisions& collisions_;

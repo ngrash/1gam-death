@@ -15,6 +15,7 @@ enum class Sample {
 
 enum class Music {
   LEVEL_1_LOOP,
+  LEVEL_2_LOOP,
   _LAST_ELEMENT_
 };
 

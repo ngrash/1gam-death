@@ -37,7 +37,9 @@ class PlayState : public State {
 
     Level*  level_;
     Sprite* level_background_;
-    int     level_width_;
+
+    void LoadLevel(StateManager& state_manager, Level* level);
+    void LoadNextLevel(StateManager& state_manager);
 
     void RenderCharacter(Graphics& g, Character& character, Vector2f camera);
     void RenderSprite(Graphics& g, Sprite* sprite, Vector2f position, Vector2f camera);

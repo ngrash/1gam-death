@@ -1,7 +1,6 @@
 #include "level1.h"
 
 #include "vector2f.h"
-#include "credits_state.h"
 
 Level1::Level1(Resources& resources, Sound& sound) :
   resources_(resources),
@@ -15,7 +14,8 @@ Level1::Level1(Resources& resources, Sound& sound) :
   mentioned_undead_(false),
   mentioned_locked_chapel_(false),
   mentioned_gargoyle_(false),
-  mentioned_crypta_(false)
+  mentioned_crypta_(false),
+  level_over_(false)
 {
   text_intro_ = new std::string("I've come to purge this place.");
   text_spotted_ = new std::string("What's moving over there?");
@@ -42,6 +42,14 @@ Texture Level1::GetBackgroundTexture() {
 
 Texture Level1::GetIntroTexture() {
   return Texture::LEVEL_1_INTRO;
+}
+
+int Level1::GetNumber() {
+  return 1;
+}
+
+bool Level1::IsLevelOver() {
+  return level_over_;
 }
 
 void Level1::Initialize(World& world) {
@@ -109,7 +117,7 @@ void Level1::Update(float seconds_elapsed, World& world, StateManager& state_man
   }
 
   if(player_pos.x >= 1836 && player_pos.x <= 1847 + 8 && player_pos.y <= 101) {
-    state_manager.PushState(new CreditsState(resources_));
+    level_over_ = true;
   }
 }
 
