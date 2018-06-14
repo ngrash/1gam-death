@@ -32,8 +32,8 @@ bool Level2::IsLevelOver() {
 
 void Level2::Initialize(World& world) {
   Player* player = world.GetPlayer();
-  //player->position_.x = world.level_width_ - 80;
-  player->position_.x = 80;
+  player->position_.x = world.level_width_ - 60;
+  player->GetSprite()->render_flip = SDL_FLIP_HORIZONTAL;
 
   sound_.PlayMusic(Music::LEVEL_2_LOOP);
 }
