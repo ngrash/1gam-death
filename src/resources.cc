@@ -9,83 +9,58 @@ Resources::Resources(SDL_Renderer& renderer) :
 {}
 
 SDL_Texture *Resources::LoadTexture(Texture texture) {
-  SDL_Texture *tex = nullptr;
-
   switch(texture) {
     case Texture::HEART:
-      tex = LoadTexture("assets/heart.png");
-      break;
+      return LoadTexture("assets/heart.png");
     case Texture::SHELL:
-      tex = LoadTexture("assets/shell.png");
-      break;
+      return LoadTexture("assets/shell.png");
     case Texture::RELOADING:
-      tex = LoadTexture("assets/reloading.png");
-      break;
+      return LoadTexture("assets/reloading.png");
     case Texture::PLAYER_IDLE:
-      tex = LoadTexture("assets/player_idle.png");
-      break;
+      return LoadTexture("assets/player_idle.png");
     case Texture::PLAYER_IDLE_W_SHOTGUN:
-      tex = LoadTexture("assets/player_idle_w_shotgun.png");
-      break;
+      return LoadTexture("assets/player_idle_w_shotgun.png");
     case Texture::PLAYER_WALKING:
-      tex = LoadTexture("assets/player_walking.png");
-      break;
+      return LoadTexture("assets/player_walking.png");
     case Texture::PLAYER_WALKING_W_SHOTGUN:
-      tex = LoadTexture("assets/player_walking_w_shotgun.png");
-      break;
+      return LoadTexture("assets/player_walking_w_shotgun.png");
     case Texture::ZOMBIE_IDLE:
-      tex = LoadTexture("assets/zombie_idle.png");
-      break;
+      return LoadTexture("assets/zombie_idle.png");
     case Texture::ZOMBIE_WALKING:
-      tex = LoadTexture("assets/zombie_walking.png");
-      break;
+      return LoadTexture("assets/zombie_walking.png");
     case Texture::ZOMBIE_RISING:
-      tex = LoadTexture("assets/zombie_rising.png");
-      break;
+      return LoadTexture("assets/zombie_rising.png");
     case Texture::ZOMBIE_ATTACKING:
-      tex = LoadTexture("assets/zombie_attacking.png");
-      break;
+      return LoadTexture("assets/zombie_attacking.png");
     case Texture::ZOMBIE_DYING:
-      tex = LoadTexture("assets/zombie_dying.png");
-      break;
+      return LoadTexture("assets/zombie_dying.png");
     case Texture::ZOMBIE_DEAD:
-      tex = LoadTexture("assets/zombie_dead.png");
-      break;
+      return LoadTexture("assets/zombie_dead.png");
     case Texture::BAT_ASLEEP:
-      tex = LoadTexture("assets/bat_asleep.png");
-      break;
+      return LoadTexture("assets/bat_asleep.png");
     case Texture::BAT_FLYING:
-      tex = LoadTexture("assets/bat_flying.png");
-      break;
+      return LoadTexture("assets/bat_flying.png");
     case Texture::BAT_STARTING:
-      tex = LoadTexture("assets/bat_starting.png");
-      break;
+      return LoadTexture("assets/bat_starting.png");
     case Texture::BAT_ATTACKING:
-      tex = LoadTexture("assets/bat_attacking.png");
-      break;
+      return LoadTexture("assets/bat_attacking.png");
     case Texture::LEVEL_1:
-      tex = LoadTexture("assets/lvl1.png");
-      break;
+      return LoadTexture("assets/lvl1.png");
     case Texture::LEVEL_1_INTRO:
-      tex = LoadTexture("assets/lvl1_intro.png");
-      break;
+      return LoadTexture("assets/lvl1_intro.png");
     case Texture::LEVEL_2:
-      tex = LoadTexture("assets/lvl2.png");
-      break;
+      return LoadTexture("assets/lvl2.png");
     case Texture::LEVEL_2_INTRO:
-      tex = LoadTexture("assets/lvl2_intro.png");
-      break;
+      return LoadTexture("assets/lvl2_intro.png");
     case Texture::GAME_OVER:
-      tex = LoadTexture("assets/game_over.png");
-      break;
+      return LoadTexture("assets/game_over.png");
     case Texture::CREDITS:
-      tex = LoadTexture("assets/credits.png");
-      break;
+      return LoadTexture("assets/credits.png");
     case Texture::_LAST_ELEMENT_:
-      break;
+      return nullptr;
   }
 
-  return tex;
+  return nullptr;
 }
 
 void Resources::DestroyTextures() {
