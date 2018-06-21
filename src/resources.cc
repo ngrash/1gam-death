@@ -51,6 +51,18 @@ SDL_Texture *Resources::LoadTexture(Texture texture) {
     case Texture::ZOMBIE_DEAD:
       tex = LoadTexture("assets/zombie_dead.png");
       break;
+    case Texture::BAT_ASLEEP:
+      tex = LoadTexture("assets/bat_asleep.png");
+      break;
+    case Texture::BAT_FLYING:
+      tex = LoadTexture("assets/bat_flying.png");
+      break;
+    case Texture::BAT_STARTING:
+      tex = LoadTexture("assets/bat_starting.png");
+      break;
+    case Texture::BAT_ATTACKING:
+      tex = LoadTexture("assets/bat_attacking.png");
+      break;
     case Texture::LEVEL_1:
       tex = LoadTexture("assets/lvl1.png");
       break;

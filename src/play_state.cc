@@ -35,7 +35,7 @@ PlayState::~PlayState() {
 void PlayState::LoadNextLevel(StateManager& state_manager) {
   player_velocity_x_ = 0;
 
-  int level_number = 0;
+  int level_number = 1;
   if(level_ != nullptr) {
     level_number = level_->GetNumber();
   }
@@ -169,9 +169,9 @@ void PlayState::Draw(Graphics& graphics) {
     RenderCharacter(graphics, *character, camera_);
 
 #ifdef DEBUG
-    if(collisions_->DoCollide(player_, character)) {
+    //if(collisions_->DoCollide(player_, character)) {
       RenderRect(graphics, character->hitbox_, character->position_, camera_);
-    }
+    //}
 #endif // DEBUG
   }
 

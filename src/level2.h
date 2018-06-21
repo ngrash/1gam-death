@@ -4,12 +4,12 @@
 #include <vector>
 #include <string>
 
+#include "bat.h"
 #include "level.h"
 #include "resources.h"
 #include "sound.h"
 #include "sprite.h"
 #include "world.h"
-#include "zombie.h"
 
 class Level2 : public Level {
   public:
@@ -27,6 +27,12 @@ class Level2 : public Level {
     Sound& sound_;
 
     std::string* text_intro_;
+    bool mentioned_intro_;
+
+    Bat* first_bat_;
+    bool spawned_first_bat_;
+
+    Bat* SpawnBat(World& world, int x);
 };
 
 #endif // LEVEL2_H_
