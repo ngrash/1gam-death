@@ -8,7 +8,7 @@
 
 void ZombieStateChasing::Initialize(Zombie& zombie) {
   zombie.animation_->Reset();
-  zombie.animation_->texture = zombie.resources_.GetTexture(Texture::ZOMBIE_WALKING);
+  zombie.animation_->texture = zombie.world_.GetResources().GetTexture(Texture::ZOMBIE_WALKING);
   zombie.animation_->frame_duration = 0.25;
   zombie.animation_->num_frames = 0;
 }
@@ -16,7 +16,7 @@ void ZombieStateChasing::Initialize(Zombie& zombie) {
 void ZombieStateChasing::Update(float seconds_elapsed, Zombie& zombie) {
   zombie.animation_->Update(seconds_elapsed);
 
-  Vector2f player_pos = zombie.player_.position_;
+  Vector2f player_pos = zombie.world_.GetPlayer().position_;
 
   if(player_pos.x > zombie.position_.x) {
     zombie.animation_->render_flip = SDL_FLIP_NONE;
@@ -33,7 +33,7 @@ void ZombieStateChasing::Update(float seconds_elapsed, Zombie& zombie) {
   if(reached_player) {
     zombie.SetState(zombie.state_attacking_);
   } else {
-    zombie.animation_->texture = zombie.resources_.GetTexture(Texture::ZOMBIE_WALKING);
+    zombie.animation_->texture = zombie.world_.GetResources().GetTexture(Texture::ZOMBIE_WALKING);
     zombie.animation_->num_frames = 4;
 
     zombie.position_.x += zombie.velocity_.x * seconds_elapsed;

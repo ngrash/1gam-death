@@ -62,7 +62,7 @@ void Level2::Update(float seconds_elapsed, World& world, StateManager& state_man
 }
 
 Bat* Level2::SpawnBat(World& world, int x) {
-  Bat* bat = new Bat(resources_, world.GetPlayer());
+  Bat* bat = new Bat(world);
   bat->position_.x = x - 8;
   bat->position_.y = 67;
   world.Spawn(*bat);

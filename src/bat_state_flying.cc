@@ -4,7 +4,7 @@
 
 void BatStateFlying::Initialize(Bat& bat) {
   bat.animation_->Reset();
-  bat.animation_->texture = bat.resources_.GetTexture(Texture::BAT_FLYING);
+  bat.animation_->texture = bat.world_.GetResources().GetTexture(Texture::BAT_FLYING);
   bat.animation_->frame_duration = 0.07;
   bat.animation_->num_frames = 4;
 }

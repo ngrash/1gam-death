@@ -1,8 +1,7 @@
 #include "bat.h"
 
-Bat::Bat(Resources& resources, Player& player) :
-  resources_(resources),
-  player_(player)
+Bat::Bat(World& world) :
+  world_(world)
 {
   health_ = 1;
 

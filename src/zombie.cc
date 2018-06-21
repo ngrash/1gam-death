@@ -2,9 +2,8 @@
 
 #include <cmath>
 
-Zombie::Zombie(Resources& resources, Player& player) :
-  player_(player),
-  resources_(resources)
+Zombie::Zombie(World& world) :
+  world_(world)
 {
   health_ = 1;
 
@@ -44,5 +43,6 @@ void Zombie::Update(float seconds_elapsed) {
 }
 
 float Zombie::GetDistanceToPlayer() {
-  return abs(player_.position_.x - position_.x);
+  Player& player = world_.GetPlayer();
+  return abs(player.position_.x - player.position_.x);
 }

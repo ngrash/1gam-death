@@ -5,7 +5,7 @@
 void ZombieStateRising::Initialize(Zombie& zombie) {
   state_duration_ = 0;
   zombie.animation_->Reset();
-  zombie.animation_->texture = zombie.resources_.GetTexture(Texture::ZOMBIE_RISING);
+  zombie.animation_->texture = zombie.world_.GetResources().GetTexture(Texture::ZOMBIE_RISING);
   zombie.animation_->frame_duration = 0.25;
   zombie.animation_->num_frames = 4;
 }

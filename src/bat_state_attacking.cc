@@ -6,7 +6,7 @@ void BatStateAttacking::Initialize(Bat& bat) {
   state_duration_ = 0;
   dealt_damage_ = false;
   bat.animation_->Reset();
-  bat.animation_->texture = bat.resources_.GetTexture(Texture::BAT_ATTACKING);
+  bat.animation_->texture = bat.world_.GetResources().GetTexture(Texture::BAT_ATTACKING);
   bat.animation_->frame_duration = 0.3;
   bat.animation_->num_frames = 1;
 }

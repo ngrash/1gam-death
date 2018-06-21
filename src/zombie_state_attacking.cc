@@ -9,7 +9,7 @@ void ZombieStateAttacking::Initialize(Zombie& zombie) {
   state_duration_ = 0;
   dealt_damage_ = false;
   zombie.animation_->Reset();
-  zombie.animation_->texture = zombie.resources_.GetTexture(Texture::ZOMBIE_ATTACKING);
+  zombie.animation_->texture = zombie.world_.GetResources().GetTexture(Texture::ZOMBIE_ATTACKING);
   zombie.animation_->frame_duration = 0.5;
   zombie.animation_->num_frames = 2;
 }
@@ -22,9 +22,11 @@ void ZombieStateAttacking::Update(float seconds_elapsed, Zombie& zombie) {
   if(!dealt_damage_ && state_duration_ >= 0.5) {
     dealt_damage_ = true;
 
+    Player& player = zombie.world_.GetPlayer();
+
     if(zombie.GetDistanceToPlayer() <= ATTACK_RANGE
-       && zombie.player_.position_.y <= ATTACK_HEIGHT) {
-      zombie.player_.health_ -= 1;
+       && player.position_.y <= ATTACK_HEIGHT) {
+      player.health_ -= 1;
     }
   }
 

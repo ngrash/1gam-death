@@ -1,14 +1,13 @@
 #ifndef BAT_H_
 #define BAT_H_
 
-#include "player.h"
-#include "character.h"
-#include "resources.h"
 #include "bat_state.h"
 #include "bat_state_asleep.h"
+#include "bat_state_attacking.h"
 #include "bat_state_flying.h"
 #include "bat_state_starting.h"
-#include "bat_state_attacking.h"
+#include "character.h"
+#include "world.h"
 
 class Bat : public Character {
   friend class BatStateAsleep;
@@ -17,7 +16,7 @@ class Bat : public Character {
   friend class BatStateAttacking;
 
   public:
-    Bat(Resources& resources, Player& player);
+    Bat(World& world);
     ~Bat();
     void Update(float seconds_elapsed);
     void SetState(BatState* state);
@@ -27,9 +26,8 @@ class Bat : public Character {
     BatStateStarting* state_starting_;
     BatStateAttacking* state_attacking_;
   private:
+    World& world_;
     BatState* current_state_;
-    Resources& resources_;
-    Player& player_;
 };
 
 #endif // BAT_H_

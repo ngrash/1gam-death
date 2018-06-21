@@ -2,15 +2,14 @@
 #define ZOMBIE_H_
 
 #include "character.h"
-#include "player.h"
-#include "resources.h"
+#include "world.h"
 #include "zombie_state.h"
 #include "zombie_state_asleep.h"
-#include "zombie_state_rising.h"
-#include "zombie_state_chasing.h"
 #include "zombie_state_attacking.h"
-#include "zombie_state_dying.h"
+#include "zombie_state_chasing.h"
 #include "zombie_state_dead.h"
+#include "zombie_state_dying.h"
+#include "zombie_state_rising.h"
 
 class Zombie : public Character {
   friend class ZombieStateAsleep;
@@ -21,7 +20,7 @@ class Zombie : public Character {
   friend class ZombieStateDead;
 
   public:
-    Zombie(Resources& resources, Player& player);
+    Zombie(World& world);
     ~Zombie();
     void Update(float seconds_elapsed);
     void SetState(ZombieState* state);
@@ -34,8 +33,7 @@ class Zombie : public Character {
     ZombieStateDying* state_dying_;
     ZombieStateDead* state_dead_;
   private:
-    Player& player_;
-    Resources& resources_;
+    World& world_;
     ZombieState* current_state_;
 };
 

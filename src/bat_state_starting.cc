@@ -5,7 +5,7 @@
 void BatStateStarting::Initialize(Bat& bat) {
   state_duration_ = 0;
   bat.animation_->Reset();
-  bat.animation_->texture = bat.resources_.GetTexture(Texture::BAT_STARTING);
+  bat.animation_->texture = bat.world_.GetResources().GetTexture(Texture::BAT_STARTING);
   bat.animation_->frame_duration = 0.1;
   bat.animation_->num_frames = 3;
 }
