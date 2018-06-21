@@ -33,9 +33,9 @@ bool Level2::IsLevelOver() {
 }
 
 void Level2::Initialize(World& world) {
-  Player* player = world.GetPlayer();
-  player->position_.x = world.level_width_ - 60;
-  player->GetSprite()->render_flip = SDL_FLIP_HORIZONTAL;
+  Player& player = world.GetPlayer();
+  player.position_.x = world.level_width_ - 60;
+  player.GetSprite()->render_flip = SDL_FLIP_HORIZONTAL;
 
   sound_.PlayMusic(Music::LEVEL_2_LOOP);
 
@@ -43,11 +43,12 @@ void Level2::Initialize(World& world) {
 }
 
 void Level2::Update(float seconds_elapsed, World& world, StateManager& state_manager) {
-  Vector2f player_pos = world.GetPlayer()->position_;
+  Player& player = world.GetPlayer();
+  Vector2f player_pos = player.position_;
 
   if(!mentioned_intro_) {
     mentioned_intro_ = true;
-    world.GetPlayer()->Say(text_intro_, 3);
+    player.Say(text_intro_, 3);
   }
 
   if(!spawned_first_bat_ && player_pos.x <= world.level_width_ - 100) {
@@ -61,7 +62,7 @@ void Level2::Update(float seconds_elapsed, World& world, StateManager& state_man
 }
 
 Bat* Level2::SpawnBat(World& world, int x) {
-  Bat* bat = new Bat(resources_, *world.GetPlayer());
+  Bat* bat = new Bat(resources_, world.GetPlayer());
   bat->position_.x = x - 8;
   bat->position_.y = 67;
   world.Spawn(*bat);

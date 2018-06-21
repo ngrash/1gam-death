@@ -53,36 +53,36 @@ bool Level1::IsLevelOver() {
 }
 
 void Level1::Initialize(World& world) {
-  Player* player = world.GetPlayer();
-  player->position_.x = 16;
-  player->position_.y = 16;
+  Player& player = world.GetPlayer();
+  player.position_.x = 16;
+  player.position_.y = 16;
 
-  player->Say(text_intro_, 5);
-  world.GetPlayer()->unarmed_ = true;
+  player.Say(text_intro_, 5);
+  player.unarmed_ = true;
 
   sound_.PlayMusic(Music::LEVEL_1_LOOP);
 }
 
 void Level1::Update(float seconds_elapsed, World& world, StateManager& state_manager) {
-  Vector2f player_pos = world.GetPlayer()->position_;
-  Player* player = world.GetPlayer();
+  Player& player = world.GetPlayer();
+  Vector2f player_pos = player.position_;
 
   if(!spawned_first_zombie_ && player_pos.x >= 299 - 8) {
     spawned_first_zombie_ = true;
-    player->Say(text_spotted_, 3);
-    player->unarmed_ = false;
+    player.Say(text_spotted_, 3);
+    player.unarmed_ = false;
     first_zombie_ = SpawnZombie(world, 580);
   }
 
   if(!mentioned_undead_ && first_zombie_ != nullptr
-      && first_zombie_->position_.x - player->position_.x <= 70) {
+      && first_zombie_->position_.x - player_pos.x <= 70) {
     mentioned_undead_ = true;
-    player->Say(text_undead_, 3);
+    player.Say(text_undead_, 3);
   }
 
   if(!spawned_wave_1_ && player_pos.x >= 647 - 8) {
     spawned_wave_1_ = true;
-    player->Say(text_wave_1_, 3);
+    player.Say(text_wave_1_, 3);
     SpawnWave1(world);
   }
 
@@ -93,7 +93,7 @@ void Level1::Update(float seconds_elapsed, World& world, StateManager& state_man
 
   if(!mentioned_locked_chapel_ && player_pos.x >= 904 - 8) {
     mentioned_locked_chapel_ = true;
-    player->Say(text_locked_chapel_, 3);
+    player.Say(text_locked_chapel_, 3);
   }
 
   if(!spawned_wave_3_ && player_pos.x >= 1219 - 8) {
@@ -103,7 +103,7 @@ void Level1::Update(float seconds_elapsed, World& world, StateManager& state_man
 
   if(!mentioned_gargoyle_ && player_pos.x >= 1443 - 8) {
     mentioned_gargoyle_ = true;
-    player->Say(text_gargoyle_, 3);
+    player.Say(text_gargoyle_, 3);
   }
 
   if(!spawned_wave_4_ && player_pos.x >= 1530 - 8) {
@@ -113,7 +113,7 @@ void Level1::Update(float seconds_elapsed, World& world, StateManager& state_man
 
   if(!mentioned_crypta_ && player_pos.x >= 1804 - 8) {
     mentioned_crypta_ = true;
-    player->Say(text_crypta_, 3);
+    player.Say(text_crypta_, 3);
   }
 
   if(player_pos.x >= 1836 && player_pos.x <= 1847 + 8 && player_pos.y <= 101) {
@@ -157,7 +157,7 @@ void Level1::SpawnWave4(World& world) {
 }
 
 Zombie* Level1::SpawnZombie(World& world, int x) {
-  Zombie* z = new Zombie(resources_, *world.GetPlayer());
+  Zombie* z = new Zombie(resources_, world.GetPlayer());
   z->SetState(z->state_rising_);
   z->position_.x = x - 8;
   z->position_.y = 16;

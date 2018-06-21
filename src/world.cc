@@ -1,8 +1,9 @@
 #include "world.h"
 
-World::World(Player& player, Collisions& collisions) :
+World::World(Player& player, Collisions& collisions, Resources& resources) :
   player_(player),
-  collisions_(collisions)
+  collisions_(collisions),
+  resources_(resources)
 {}
 
 void World::Update(float seconds_elapsed) {
@@ -11,8 +12,16 @@ void World::Update(float seconds_elapsed) {
   }
 }
 
-Player* World::GetPlayer() {
-  return &player_;
+Player& World::GetPlayer() {
+  return player_;
+}
+
+Collisions& World::GetCollisions() {
+  return collisions_;
+}
+
+Resources& World::GetResources() {
+  return resources_;
 }
 
 std::vector<Character*>* World::GetCharacters() {

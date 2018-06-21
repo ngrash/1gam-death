@@ -9,16 +9,22 @@
 
 class World {
   public:
-    World(Player& player, Collisions& collisions);
-    Player* GetPlayer();
+    World(Player& player, Collisions& collisions, Resources& resources);
+
     void Spawn(Character& character);
     void Release();
     void Update(float seconds_elapsed);
-    std::vector<Character*>* GetCharacters();
+
     int level_width_;
+
+    std::vector<Character*>* GetCharacters();
+    Player& GetPlayer();
+    Collisions& GetCollisions();
+    Resources& GetResources();
   private:
     Player& player_;
     Collisions& collisions_;
+    Resources& resources_;
     std::vector<Character*> characters_;
 };
 

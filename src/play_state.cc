@@ -21,7 +21,7 @@ PlayState::PlayState(Resources& resources, Sound& sound, int screen_width, int s
   collisions_ = new Collisions();
 
   player_ = new Player(resources_, *collisions_);
-  world_ = new World(*player_, *collisions_);
+  world_ = new World(*player_, *collisions_, resources_);
 }
 
 PlayState::~PlayState() {
