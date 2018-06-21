@@ -16,6 +16,8 @@ class World {
     void Release();
     void Update(float seconds_elapsed);
 
+    float GetDistanceToPlayer(Character* character);
+
     int level_width_;
 
     std::vector<Character*>* GetCharacters();

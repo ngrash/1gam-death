@@ -27,7 +27,7 @@ void ZombieStateChasing::Update(float seconds_elapsed, Zombie& zombie) {
     zombie.velocity_.x = -MAX_ZOMBIE_VELOCITY_X;
   }
 
-  float distance_to_player = zombie.GetDistanceToPlayer();
+  float distance_to_player = zombie.world_.GetDistanceToPlayer(&zombie);
   bool reached_player = distance_to_player <= DESIRED_DISTANCE_TO_PLAYER;
 
   if(reached_player) {

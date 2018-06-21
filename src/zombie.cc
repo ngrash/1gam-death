@@ -1,7 +1,5 @@
 #include "zombie.h"
 
-#include <cmath>
-
 Zombie::Zombie(World& world) :
   world_(world)
 {
@@ -42,7 +40,3 @@ void Zombie::Update(float seconds_elapsed) {
   current_state_->Update(seconds_elapsed, *this);
 }
 
-float Zombie::GetDistanceToPlayer() {
-  Player& player = world_.GetPlayer();
-  return abs(this->position_.x - player.position_.x);
-}

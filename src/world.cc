@@ -1,5 +1,7 @@
 #include "world.h"
 
+#include <cmath>
+
 World::World(Resources& resources) :
   resources_(resources)
 {
@@ -48,3 +50,6 @@ void World::Release() {
   collisions_->Clear();
 }
 
+float World::GetDistanceToPlayer(Character* character) {
+  return abs(character->position_.x - player_->position_.x);
+}

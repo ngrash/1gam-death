@@ -29,7 +29,7 @@ PlayState::~PlayState() {
 void PlayState::LoadNextLevel(StateManager& state_manager) {
   player_velocity_x_ = 0;
 
-  int level_number = 0;
+  int level_number = 1;
   if(level_ != nullptr) {
     level_number = level_->GetNumber();
   }
