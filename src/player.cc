@@ -1,5 +1,7 @@
 #include "player.h"
 
+#include "world.h"
+
 #define MAX_PLAYER_VELOCITY_X 50
 #define MAX_PLAYER_VELOCITY_Y 50
 #define FLOOR_Y 16
@@ -8,7 +10,7 @@
 #define WEAPON_DISTANCE 80
 #define WEAPON_Y 9
 
-Player::Player(Resources& resources, Collisions& collisions) :
+Player::Player(World& world) :
   health_(3),
   shells_(0),
   score_(0),
@@ -16,8 +18,7 @@ Player::Player(Resources& resources, Collisions& collisions) :
   unarmed_(false),
   text_(nullptr),
   has_text_(false),
-  resources_(resources),
-  collisions_(collisions),
+  world_(world),
   velocity_x_factor_(0),
   reload_duration_(0),
   text_display_duration_target_(0),
@@ -29,10 +30,10 @@ Player::Player(Resources& resources, Collisions& collisions) :
   hitbox_.w = 5;
 
   animation_->frame_duration = 0.10;
-  animation_->texture = resources_.GetTexture(Texture::PLAYER_IDLE);
+  animation_->texture = world_.GetResources().GetTexture(Texture::PLAYER_IDLE);
 
   reloading_animation_ = new Animation();
-  reloading_animation_->texture = resources_.GetTexture(Texture::RELOADING);
+  reloading_animation_->texture = world_.GetResources().GetTexture(Texture::RELOADING);
   reloading_animation_->src_rect.w = 32;
   reloading_animation_->num_frames = 33;
   reloading_animation_->frame_duration = WEAPON_RELOAD_TIME_S / (float)reloading_animation_->num_frames;
@@ -43,7 +44,7 @@ Player::~Player() {
 }
 
 void Player::SetVelocityXFactor(float factor) {
-  if(collisions_.DoesCollide(this)) {
+  if(world_.GetCollisions().DoesCollide(this)) {
     if(factor > 0) {
       factor = 0.5;
     } else if(factor < 0) {
@@ -61,18 +62,18 @@ void Player::SetVelocityXFactor(float factor) {
 
   if(factor == 0) {
     Texture idle_texture = unarmed_ ? Texture::PLAYER_IDLE : Texture::PLAYER_IDLE_W_SHOTGUN;
-    animation_->texture = resources_.GetTexture(idle_texture);
+    animation_->texture = world_.GetResources().GetTexture(idle_texture);
     animation_->num_frames = 0;
   }
   else {
     Texture walking_texture = unarmed_ ? Texture::PLAYER_WALKING : Texture::PLAYER_WALKING_W_SHOTGUN;
 
     if(factor > 0) {
-      animation_->texture = resources_.GetTexture(walking_texture);
+      animation_->texture = world_.GetResources().GetTexture(walking_texture);
       animation_->render_flip = SDL_FLIP_NONE;
       animation_->num_frames = 4;
     } else if(factor < 0) {
-      animation_->texture = resources_.GetTexture(walking_texture);
+      animation_->texture = world_.GetResources().GetTexture(walking_texture);
       animation_->render_flip = SDL_FLIP_HORIZONTAL;
       animation_->num_frames = 4;
     }
@@ -92,7 +93,7 @@ void Player::Shot() {
   }
 
   int direction = animation_->render_flip == SDL_FLIP_NONE ? 1 : -1;
-  Character* enemy = collisions_.GetCharacterInLine(position_.x, position_.y + WEAPON_Y, direction, WEAPON_DISTANCE);
+  Character* enemy = world_.GetCollisions().GetCharacterInLine(position_.x, position_.y + WEAPON_Y, direction, WEAPON_DISTANCE);
 
   if(enemy != nullptr) {
     enemy->health_--;

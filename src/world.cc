@@ -1,10 +1,16 @@
 #include "world.h"
 
-World::World(Player& player, Collisions& collisions, Resources& resources) :
-  player_(player),
-  collisions_(collisions),
+World::World(Resources& resources) :
   resources_(resources)
-{}
+{
+  collisions_ = new Collisions();
+  player_ = new Player(*this);
+}
+
+World::~World() {
+  delete collisions_;
+  delete player_;
+}
 
 void World::Update(float seconds_elapsed) {
   for(std::vector<Character*>::size_type i = 0; i < characters_.size(); i++) {
@@ -13,11 +19,11 @@ void World::Update(float seconds_elapsed) {
 }
 
 Player& World::GetPlayer() {
-  return player_;
+  return *player_;
 }
 
 Collisions& World::GetCollisions() {
-  return collisions_;
+  return *collisions_;
 }
 
 Resources& World::GetResources() {
@@ -30,7 +36,7 @@ std::vector<Character*>* World::GetCharacters() {
 
 void World::Spawn(Character& character) {
   characters_.push_back(&character);
-  collisions_.AddCollidable(&character);
+  collisions_->AddCollidable(&character);
 }
 
 void World::Release() {
@@ -39,6 +45,6 @@ void World::Release() {
   }
 
   characters_.clear();
-  collisions_.Clear();
+  collisions_->Clear();
 }
 

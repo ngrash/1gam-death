@@ -5,10 +5,8 @@
 
 #include "animation.h"
 #include "character.h"
-#include "collisions.h"
 #include "graphics.h"
 #include "level.h"
-#include "player.h"
 #include "sound.h"
 #include "state.h"
 #include "vector2f.h"
@@ -28,9 +26,7 @@ class PlayState : public State {
     int screen_width_;
     int screen_height_;
 
-    Player* player_;
     World* world_;
-    Collisions* collisions_;
 
     int player_velocity_x_;
     Vector2f camera_;

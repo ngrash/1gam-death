@@ -17,25 +17,19 @@ PlayState::PlayState(Resources& resources, Sound& sound, int screen_width, int s
   level_background_(nullptr)
 {
   camera_.y = 0;
-
-  collisions_ = new Collisions();
-
-  player_ = new Player(resources_, *collisions_);
-  world_ = new World(*player_, *collisions_, resources_);
+  world_ = new World(resources_);
 }
 
 PlayState::~PlayState() {
   delete world_;
-  delete player_;
   delete level_;
   delete level_background_;
-  delete collisions_;
 }
 
 void PlayState::LoadNextLevel(StateManager& state_manager) {
   player_velocity_x_ = 0;
 
-  int level_number = 1;
+  int level_number = 0;
   if(level_ != nullptr) {
     level_number = level_->GetNumber();
   }
@@ -95,14 +89,16 @@ void PlayState::Initialize(StateManager& state_manager) {
 }
 
 void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
-  int player_health = player_->health_;
+  Player& player = world_->GetPlayer();
+
+  int player_health = player.health_;
 
   if(player_health <= 0) {
-    state_manager.PushState(new GameOverState(resources_, player_->score_));
+    state_manager.PushState(new GameOverState(resources_, player.score_));
   }
 
-  player_->SetVelocityXFactor(player_velocity_x_);
-  player_->Update(seconds_elapsed);
+  player.SetVelocityXFactor(player_velocity_x_);
+  player.Update(seconds_elapsed);
 
   world_->Update(seconds_elapsed);
   level_->Update(seconds_elapsed, *world_, state_manager);
@@ -112,19 +108,19 @@ void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
   }
 
   // Player took damage
-  if(player_health != player_->health_) {
+  if(player_health != player.health_) {
     sound_.PlaySample(Sample::DAMAGE);
   }
 
-  Vector2f player_pos = player_->position_;
+  Vector2f player_pos = player.position_;
 
   // Restrict player to level boundaries
   if(player_pos.x <= 0) {
-    player_->position_.x = 0;
+    player.position_.x = 0;
   }
 
   if(player_pos.x >= world_->level_width_ - 53) {
-    player_->position_.x = world_->level_width_ - 53;
+    player.position_.x = world_->level_width_ - 53;
   }
 
   // Make the camera follow the player
@@ -146,21 +142,24 @@ void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
 void PlayState::Draw(Graphics& graphics) {
   graphics.RenderSprite(level_background_, 0, 0);
 
-  if(player_->health_ >= 1) graphics.RenderTexture(resources_.GetTexture(Texture::HEART), 125, 0);
-  if(player_->health_ >= 2) graphics.RenderTexture(resources_.GetTexture(Texture::HEART), 135, 0);
-  if(player_->health_ >= 3) graphics.RenderTexture(resources_.GetTexture(Texture::HEART), 145, 0);
+  Player& player = world_->GetPlayer();
+  Resources& resources = world_->GetResources();
 
-  if(player_->reloading_) {
-    graphics.RenderSprite(player_->reloading_animation_, 62, 0);
+  if(player.health_ >= 1) graphics.RenderTexture(resources.GetTexture(Texture::HEART), 125, 0);
+  if(player.health_ >= 2) graphics.RenderTexture(resources.GetTexture(Texture::HEART), 135, 0);
+  if(player.health_ >= 3) graphics.RenderTexture(resources.GetTexture(Texture::HEART), 145, 0);
+
+  if(player.reloading_) {
+    graphics.RenderSprite(player.reloading_animation_, 62, 0);
   } else {
-    if(player_->shells_ >= 1) graphics.RenderTexture(resources_.GetTexture(Texture::SHELL), 60, -1);
-    if(player_->shells_ >= 2) graphics.RenderTexture(resources_.GetTexture(Texture::SHELL), 70, -1);
-    if(player_->shells_ >= 3) graphics.RenderTexture(resources_.GetTexture(Texture::SHELL), 80, -1);
+    if(player.shells_ >= 1) graphics.RenderTexture(resources.GetTexture(Texture::SHELL), 60, -1);
+    if(player.shells_ >= 2) graphics.RenderTexture(resources.GetTexture(Texture::SHELL), 70, -1);
+    if(player.shells_ >= 3) graphics.RenderTexture(resources.GetTexture(Texture::SHELL), 80, -1);
   }
 
-  RenderCharacter(graphics, *player_, camera_);
+  RenderCharacter(graphics, player, camera_);
 #ifdef DEBUG
-  RenderRect(graphics, player_->hitbox_, player_->position_, camera_);
+  RenderRect(graphics, player.hitbox_, player.position_, camera_);
 #endif // DEBUG
 
   std::vector<Character*>* characters = world_->GetCharacters();
@@ -169,20 +168,22 @@ void PlayState::Draw(Graphics& graphics) {
     RenderCharacter(graphics, *character, camera_);
 
 #ifdef DEBUG
-    //if(collisions_->DoCollide(player_, character)) {
+    //if(collisions_->DoCollide(player, character)) {
       RenderRect(graphics, character->hitbox_, character->position_, camera_);
     //}
 #endif // DEBUG
   }
 
-  if(player_->has_text_) {
-    graphics.RenderTextCentered(*player_->text_, screen_width_, 20);
+  if(player.has_text_) {
+    graphics.RenderTextCentered(*player.text_, screen_width_, 20);
   }
 
-  graphics.RenderText(std::to_string(player_->score_), 4, 0);
+  graphics.RenderText(std::to_string(player.score_), 4, 0);
 }
 
 void PlayState::HandleEvent(StateManager& state_manager, SDL_Event& event) {
+  Player& player = world_->GetPlayer();
+
   switch(event.type) {
     case SDL_KEYDOWN:
       switch(event.key.keysym.sym) {
@@ -205,15 +206,15 @@ void PlayState::HandleEvent(StateManager& state_manager, SDL_Event& event) {
           break;
         case SDLK_j:
           if(!event.key.repeat) {
-            player_->Jump();
+            player.Jump();
           }
           break;
         case SDLK_k:
           if(!event.key.repeat) {
-            player_->Shot();
+            player.Shot();
 
-            if(!player_->unarmed_) {
-              if(player_->reloading_) {
+            if(!player.unarmed_) {
+              if(player.reloading_) {
                 sound_.PlaySample(Sample::NO_AMMO);
               } else {
                 sound_.PlaySample(Sample::SHOT);

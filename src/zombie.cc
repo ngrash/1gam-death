@@ -44,5 +44,5 @@ void Zombie::Update(float seconds_elapsed) {
 
 float Zombie::GetDistanceToPlayer() {
   Player& player = world_.GetPlayer();
-  return abs(player.position_.x - player.position_.x);
+  return abs(this->position_.x - player.position_.x);
 }

@@ -9,7 +9,8 @@
 
 class World {
   public:
-    World(Player& player, Collisions& collisions, Resources& resources);
+    World(Resources& resources);
+    ~World();
 
     void Spawn(Character& character);
     void Release();
@@ -22,8 +23,8 @@ class World {
     Collisions& GetCollisions();
     Resources& GetResources();
   private:
-    Player& player_;
-    Collisions& collisions_;
+    Player* player_;
+    Collisions* collisions_;
     Resources& resources_;
     std::vector<Character*> characters_;
 };

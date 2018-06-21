@@ -8,9 +8,11 @@
 #include "resources.h"
 #include "vector2f.h"
 
+class World;
+
 class Player : public Character {
   public:
-    Player(Resources& resources, Collisions& collisions);
+    Player(World& world);
     ~Player();
     void Update(float seconds_elapsed);
     void SetVelocityXFactor(float factor);
@@ -27,8 +29,7 @@ class Player : public Character {
     std::string* text_;
     bool has_text_;
   private:
-    Resources& resources_;
-    Collisions& collisions_;
+    World& world_;
     float velocity_x_factor_;
     float reload_duration_;
     float text_display_duration_target_;
