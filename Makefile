@@ -21,6 +21,16 @@ $(BUILD_DIR)/%.o: %.cc
 run:
 	./$(BIN)
 
+ASSETS_DIR=assets
+ASE=$(wildcard $(ASSETS_DIR)/*.ase)
+PNG=$(ASE:%.ase=%.png)
+
+.PHONY: assets
+assets: $(PNG)
+
+%.png: %.ase
+	aseprite -b $< --sheet $@ >/dev/null
+
 .PHONY: clean
 clean:
 	-rm $(BIN) $(OBJ) $(DEP)
