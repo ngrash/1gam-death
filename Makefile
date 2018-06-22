@@ -4,10 +4,16 @@ LIBS=-lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 BIN=death
 BUILD_DIR=build
+ASSETS_DIR=assets
 
 CPP=$(wildcard src/*.cc)
 OBJ=$(CPP:%.cc=$(BUILD_DIR)/%.o)
 DEP=$(OBJ:%.o=%.d)
+
+ASE=$(wildcard $(ASSETS_DIR)/*.ase)
+PNG=$(ASE:%.ase=%.png)
+
+game: $(BIN) $(PNG)
 
 $(BIN): $(OBJ)
 	mkdir -p $(@D)
@@ -21,10 +27,6 @@ $(BUILD_DIR)/%.o: %.cc
 run:
 	./$(BIN)
 
-ASSETS_DIR=assets
-ASE=$(wildcard $(ASSETS_DIR)/*.ase)
-PNG=$(ASE:%.ase=%.png)
-
 .PHONY: assets
 assets: $(PNG)
 
@@ -33,4 +35,4 @@ assets: $(PNG)
 
 .PHONY: clean
 clean:
-	-rm $(BIN) $(OBJ) $(DEP)
+	-rm $(BIN) $(OBJ) $(DEP) $(PNG)
