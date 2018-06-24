@@ -14,8 +14,8 @@ void Collisions::AddCollidable(Character* character) {
 
 bool Collisions::DoesCollide(Character* character) {
   SDL_Rect chb;
-  chb.x = character->hitbox_.x + character->position_.x;
-  chb.y = character->hitbox_.y + character->position_.y;
+  chb.x = (int)((float)character->hitbox_.x + character->position_.x);
+  chb.y = (int)((float)character->hitbox_.y + character->position_.y);
   chb.w = character->hitbox_.w;
   chb.h = character->hitbox_.h;
 
@@ -23,8 +23,8 @@ bool Collisions::DoesCollide(Character* character) {
   for(std::vector<Character*>::size_type i = 0; i < collidables_.size(); i++) {
     Character* other = collidables_[i];
 
-    ohb.x = other->hitbox_.x + other->position_.x;
-    ohb.y = other->hitbox_.y + other->position_.y;
+    ohb.x = (int)((float)other->hitbox_.x + other->position_.x);
+    ohb.y = (int)((float)other->hitbox_.y + other->position_.y);
     ohb.w = other->hitbox_.w;
     ohb.h = other->hitbox_.h;
 
@@ -38,14 +38,14 @@ bool Collisions::DoesCollide(Character* character) {
 
 bool Collisions::DoCollide(Character* character, Character* other) {
   SDL_Rect chb;
-  chb.x = character->hitbox_.x + character->position_.x;
-  chb.y = character->hitbox_.y + character->position_.y;
+  chb.x = (int)((float)character->hitbox_.x + character->position_.x);
+  chb.y = (int)((float)character->hitbox_.y + character->position_.y);
   chb.w = character->hitbox_.w;
   chb.h = character->hitbox_.h;
 
   SDL_Rect ohb;
-  ohb.x = other->hitbox_.x + other->position_.x;
-  ohb.y = other->hitbox_.y + other->position_.y;
+  ohb.x = (int)((float)other->hitbox_.x + other->position_.x);
+  ohb.y = (int)((float)other->hitbox_.y + other->position_.y);
   ohb.w = other->hitbox_.w;
   ohb.h = other->hitbox_.h;
 
@@ -59,22 +59,22 @@ Character* Collisions::GetCharacterInLine(int x, int y, int direction, int max_d
     Character* other = collidables_[i];
 
     SDL_Rect hitbox;
-    hitbox.x = other->hitbox_.x + other->position_.x;
-    hitbox.y = other->hitbox_.y + other->position_.y;
+    hitbox.x = (int)((float)other->hitbox_.x + other->position_.x);
+    hitbox.y = (int)((float)other->hitbox_.y + other->position_.y);
     hitbox.w = other->hitbox_.w;
     hitbox.h = other->hitbox_.h;
 
-    int distance_to_player = abs(x - other->position_.x);
+    int distance_to_player = abs(x - (int)other->position_.x);
 
     if(distance_to_player <= max_distance && y <= (hitbox.y + hitbox.h) && y >= hitbox.y) {
       // right
-      if(direction > 0 && other->position_.x >= x) {
+      if(direction > 0 && (int)other->position_.x >= x) {
         if(nearest == nullptr || other->position_.x < nearest->position_.x) {
           nearest = other;
         }
       }
       // left
-      else if(direction < 0 && other->position_.x <= x) {
+      else if(direction < 0 && (int)other->position_.x <= x) {
         if(nearest == nullptr || other->position_.x > nearest->position_.x) {
           nearest = other;
         }

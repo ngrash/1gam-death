@@ -35,7 +35,7 @@ void Graphics::RenderTextCentered(const std::string& text, const int w, const in
 
   SDL_QueryTexture(texture, NULL, NULL, &dst.w, &dst.h);
 
-  dst.x = ((w / 2.0) - (dst.w / 2.0)) * GAME_SCALE;
+  dst.x = (int)((w / 2.0) - (dst.w / 2.0)) * GAME_SCALE;
   dst.y = y * GAME_SCALE;
 
   dst.w *= GAME_SCALE;

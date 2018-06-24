@@ -11,8 +11,8 @@ void ZombieStateDead::Initialize(Zombie& zombie) {
   zombie.hitbox_.h = 1;
 
   // make sure they don't flicker on the ground
-  zombie.position_.x = (int)zombie.position_.x;
-  zombie.position_.y = (int)zombie.position_.y;
+  zombie.position_.x = (float)(int)zombie.position_.x;
+  zombie.position_.y = (float)(int)zombie.position_.y;
 }
 
 void ZombieStateDead::Update(float, Zombie&) {}

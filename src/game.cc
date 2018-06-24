@@ -19,7 +19,7 @@
 #define RENDERING_DEVICE_INDEX -1
 
 #define TARGET_FPS 60
-#define OPTIMAL_FRAME_TIME 1000.0 / TARGET_FPS
+#define OPTIMAL_FRAME_TIME 1000.0f / TARGET_FPS
 
 Game::Game()
   : renderer_(nullptr),
@@ -113,14 +113,14 @@ void Game::Run() {
 
   while(state_manager_->IsRunning()) {
     current_time = SDL_GetTicks();
-    seconds_elapsed = (current_time - last_time) / 1000.0;
+    seconds_elapsed = (float)(current_time - last_time) / 1000.0f;
 
     HandleInput();
     Update(seconds_elapsed);
     Render(*graphics_);
 
-    if(SDL_GetTicks() - current_time < OPTIMAL_FRAME_TIME) {
-      SDL_Delay(OPTIMAL_FRAME_TIME - (SDL_GetTicks() - current_time));
+    if((float)(SDL_GetTicks() - current_time) < OPTIMAL_FRAME_TIME) {
+      SDL_Delay((int)(OPTIMAL_FRAME_TIME - (float)(SDL_GetTicks() - current_time)));
     }
 
     last_time = current_time;

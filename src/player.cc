@@ -29,7 +29,7 @@ Player::Player(World& world) :
   hitbox_.h = 16;
   hitbox_.w = 5;
 
-  animation_->frame_duration = 0.10;
+  animation_->frame_duration = 0.10f;
   animation_->texture = world_.GetResources().GetTexture(Texture::PLAYER_IDLE);
 
   reloading_animation_ = new Animation();
@@ -93,7 +93,7 @@ void Player::Shot() {
   }
 
   int direction = animation_->render_flip == SDL_FLIP_NONE ? 1 : -1;
-  Character* enemy = world_.GetCollisions().GetCharacterInLine(position_.x, position_.y + WEAPON_Y, direction, WEAPON_DISTANCE);
+  Character* enemy = world_.GetCollisions().GetCharacterInLine((int)position_.x, (int)position_.y + WEAPON_Y, direction, WEAPON_DISTANCE);
 
   if(enemy != nullptr) {
     enemy->health_--;

@@ -18,7 +18,7 @@ class Player : public Character {
     void SetVelocityXFactor(float factor);
     void Jump();
     void Shot();
-    void Say(std::string* text, float display_duration);;
+    void Say(std::string* text, float display_duration);
 
     int health_;
     int shells_;

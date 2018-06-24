@@ -2,7 +2,7 @@
 
 #include "bat.h"
 
-#define FRAME_DURATION 0.07
+#define FRAME_DURATION 0.07f
 #define NUM_FRAMES 4
 #define SPEED 40
 #define ATTACK_DISTANCE 10

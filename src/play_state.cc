@@ -97,7 +97,7 @@ void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
     state_manager.PushState(new GameOverState(resources_));
   }
 
-  player.SetVelocityXFactor(player_velocity_x_);
+  player.SetVelocityXFactor((float)player_velocity_x_);
   player.Update(seconds_elapsed);
 
   world_->Update(seconds_elapsed);
@@ -119,16 +119,16 @@ void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
     player.position_.x = 0;
   }
 
-  if(player_pos.x >= world_->level_width_ - 53) {
-    player.position_.x = world_->level_width_ - 53;
+  if(player_pos.x >= (float)world_->level_width_ - 53) {
+    player.position_.x = (float)world_->level_width_ - 53;
   }
 
   // Make the camera follow the player
-  if(player_pos.x > ((screen_width_ / 2) - 8)) {
-    if(player_pos.x < world_->level_width_ - ((screen_width_ / 2) + 8)) {
-      camera_.x = player_pos.x - (screen_width_ / 2) + 8;
+  if(player_pos.x > (float)((screen_width_ / 2) - 8)) {
+    if(player_pos.x < (float)world_->level_width_ - (((float)screen_width_ / 2) + 8)) {
+      camera_.x = (float)player_pos.x - ((float)screen_width_ / 2) + 8;
     } else {
-      camera_.x = world_->level_width_ - screen_width_;
+      camera_.x = (float)(world_->level_width_ - screen_width_);
     }
   }
   else {
@@ -136,7 +136,7 @@ void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
   }
 
   // Select the right part of the level
-  level_background_->src_rect.x = camera_.x;
+  level_background_->src_rect.x = (int)camera_.x;
 }
 
 void PlayState::Draw(Graphics& graphics) {
@@ -251,20 +251,20 @@ void PlayState::HandleEvent(StateManager& state_manager, SDL_Event& event) {
 void PlayState::RenderCharacter(Graphics& g, Character& character, Vector2f camera) {
   Sprite* sprite = character.GetSprite();
   Vector2f screen = GetScreenPosition(character.position_, sprite->src_rect.h, camera);
-  g.RenderSprite(sprite, screen.x, screen.y);
+  g.RenderSprite(sprite, (int)screen.x, (int)screen.y);
 }
 
 void PlayState::RenderSprite(Graphics& g, Sprite* sprite, Vector2f position, Vector2f camera) {
   Vector2f screen = GetScreenPosition(position, sprite->src_rect.h, camera);
-  g.RenderSprite(sprite, screen.x, screen.y);
+  g.RenderSprite(sprite, (int)screen.x, (int)screen.y);
 }
 
 void PlayState::RenderRect(Graphics& g, SDL_Rect rect, Vector2f position, Vector2f camera) {
   Vector2f screen = GetScreenPosition(position, rect.h, camera);
 
   SDL_Rect target;
-  target.x = screen.x + rect.x;
-  target.y = screen.y + rect.y;
+  target.x = (int)(screen.x + (float)rect.x);
+  target.y = (int)(screen.y + (float)rect.y);
   target.w = rect.w;
   target.h = rect.h;
   g.RenderRect(&target);
@@ -276,7 +276,7 @@ Vector2f PlayState::GetScreenPosition(Vector2f position, int height, Vector2f ca
 
   Vector2f screen;
   screen.x = rel_cam_x;
-  screen.y = screen_height_ - rel_cam_y - height;
+  screen.y = (float)screen_height_ - rel_cam_y - (float)height;
 
   return screen;
 }

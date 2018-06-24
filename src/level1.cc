@@ -159,7 +159,7 @@ void Level1::SpawnWave4(World& world) {
 Zombie* Level1::SpawnZombie(World& world, int x) {
   Zombie* z = new Zombie(world);
   z->SetState(z->state_rising_);
-  z->position_.x = x - 8;
+  z->position_.x = (float)x - 8;
   z->position_.y = 16;
   world.Spawn(*z);
 
