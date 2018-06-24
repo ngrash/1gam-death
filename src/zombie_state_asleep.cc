@@ -9,6 +9,6 @@ void ZombieStateAsleep::Initialize(Zombie& zombie) {
   zombie.animation_->num_frames = 0;
 }
 
-void ZombieStateAsleep::Update(float seconds_elapsed, Zombie& zombie) {
+void ZombieStateAsleep::Update(float, Zombie&) {
   // A sleeping zombie does nothing.
 }

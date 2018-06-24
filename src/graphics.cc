@@ -26,7 +26,7 @@ void Graphics::EndRender() {
 }
 
 void Graphics::RenderTextCentered(const std::string& text, const int w, const int y) {
-  SDL_Color color = {50, 50, 50};
+  SDL_Color color = {50, 50, 50, 0};
   SDL_Surface* surface = TTF_RenderText_Solid(font_, text.c_str(), color);
   SDL_Texture* texture = SDL_CreateTextureFromSurface(&renderer_, surface);
   SDL_FreeSurface(surface);
@@ -47,7 +47,7 @@ void Graphics::RenderTextCentered(const std::string& text, const int w, const in
 }
 
 void Graphics::RenderText(const std::string& text, const int x, const int y) {
-  SDL_Color color = {50, 50, 50};
+  SDL_Color color = {50, 50, 50, 0};
   SDL_Surface* surface = TTF_RenderText_Solid(font_, text.c_str(), color);
   SDL_Texture* texture = SDL_CreateTextureFromSurface(&renderer_, surface);
   SDL_FreeSurface(surface);

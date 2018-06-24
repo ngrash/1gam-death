@@ -8,7 +8,7 @@
 
 class GameOverState : public State {
   public:
-    GameOverState(Resources& resources, int score);
+    GameOverState(Resources& resources);
     void Initialize(StateManager& state_manager);
     void HandleEvent(StateManager& state_manager, SDL_Event& event);
     void Update(StateManager& state_manager, float seconds_elapsed);

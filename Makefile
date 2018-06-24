@@ -1,5 +1,5 @@
 CXX=g++
-CXX_FLAGS=--std=c++11 -Wfatal-errors -Wall# -Wextra Wpedantic -Wconversion -Wshadow
+CXX_FLAGS=--std=c++11 -Werror -Wfatal-errors -Wall -Wextra # Wpedantic -Wconversion -Wshadow
 LIBS=-lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 BIN=death

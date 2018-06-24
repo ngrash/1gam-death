@@ -4,15 +4,15 @@ CreditsState::CreditsState(Resources& resources) {
   texture_ = resources.GetTexture(Texture::CREDITS);
 }
 
-void CreditsState::Initialize(StateManager& state_manager) {
+void CreditsState::Initialize(StateManager&) {
 
 }
 
-void CreditsState::HandleEvent(StateManager& state_manager, SDL_Event& event) {
+void CreditsState::HandleEvent(StateManager&, SDL_Event&) {
 
 }
 
-void CreditsState::Update(StateManager& state_manager, float seconds_elapsed) {
+void CreditsState::Update(StateManager&, float) {
 
 }
 

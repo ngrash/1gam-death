@@ -29,7 +29,7 @@ PlayState::~PlayState() {
 void PlayState::LoadNextLevel(StateManager& state_manager) {
   player_velocity_x_ = 0;
 
-  int level_number = 0;
+  int level_number = 1;
   if(level_ != nullptr) {
     level_number = level_->GetNumber();
   }
@@ -94,7 +94,7 @@ void PlayState::Update(StateManager& state_manager, float seconds_elapsed) {
   int player_health = player.health_;
 
   if(player_health <= 0) {
-    state_manager.PushState(new GameOverState(resources_, player.score_));
+    state_manager.PushState(new GameOverState(resources_));
   }
 
   player.SetVelocityXFactor(player_velocity_x_);

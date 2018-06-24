@@ -1,18 +1,18 @@
 #include "game_over_state.h"
 
-GameOverState::GameOverState(Resources& resources, int score) {
+GameOverState::GameOverState(Resources& resources) {
   texture_ = resources.GetTexture(Texture::GAME_OVER);
 }
 
-void GameOverState::Initialize(StateManager& state_manager) {
+void GameOverState::Initialize(StateManager&) {
 
 }
 
-void GameOverState::HandleEvent(StateManager& state_manager, SDL_Event& event) {
+void GameOverState::HandleEvent(StateManager&, SDL_Event&) {
 
 }
 
-void GameOverState::Update(StateManager& state_manager, float seconds_elapsed) {
+void GameOverState::Update(StateManager&, float) {
 
 }
 

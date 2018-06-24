@@ -15,4 +15,4 @@ void ZombieStateDead::Initialize(Zombie& zombie) {
   zombie.position_.y = (int)zombie.position_.y;
 }
 
-void ZombieStateDead::Update(float seconds_elapsed, Zombie& zombie) {}
+void ZombieStateDead::Update(float, Zombie&) {}

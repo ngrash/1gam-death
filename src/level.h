@@ -9,7 +9,7 @@ class Level {
     virtual ~Level() {}
     virtual Texture GetBackgroundTexture() = 0;
     virtual Texture GetIntroTexture() = 0;
-    virtual void Initialize(World& world) {}
+    virtual void Initialize(World&) {};
     virtual void Update(float seconds_elapsed, World& world, StateManager& state_manager) = 0;
     virtual int GetNumber() = 0;
     virtual bool IsLevelOver() = 0;

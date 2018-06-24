@@ -63,7 +63,7 @@ void Level1::Initialize(World& world) {
   sound_.PlayMusic(Music::LEVEL_1_LOOP);
 }
 
-void Level1::Update(float seconds_elapsed, World& world, StateManager& state_manager) {
+void Level1::Update(float, World& world, StateManager&) {
   Player& player = world.GetPlayer();
   Vector2f player_pos = player.position_;
 

@@ -42,7 +42,7 @@ void Level2::Initialize(World& world) {
   first_bat_ = SpawnBat(world, world.level_width_ - 158);
 }
 
-void Level2::Update(float seconds_elapsed, World& world, StateManager& state_manager) {
+void Level2::Update(float, World& world, StateManager& state_manager) {
   Player& player = world.GetPlayer();
   Vector2f player_pos = player.position_;
 

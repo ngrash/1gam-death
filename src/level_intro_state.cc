@@ -7,10 +7,10 @@ LevelIntroState::LevelIntroState(SDL_Texture* texture) :
   intro_duration_(0)
 {}
 
-void LevelIntroState::Initialize(StateManager& state_manager) {
+void LevelIntroState::Initialize(StateManager&) {
 }
 
-void LevelIntroState::HandleEvent(StateManager& state_manager, SDL_Event& event) {
+void LevelIntroState::HandleEvent(StateManager&, SDL_Event&) {
 
 }
 
