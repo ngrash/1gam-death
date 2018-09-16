@@ -1,8 +1,9 @@
-CXX=g++
-CXX_FLAGS=--std=c++11 -Werror -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow
-LIBS=-lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+CXX=$(CROSS)g++
+PKG_CONFIG=$(CROSS)pkg-config
+CXX_FLAGS=--std=c++11 -Werror -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow `$(PKG_CONFIG) --cflags sdl2`
+LIBS=`$(PKG_CONFIG) --libs sdl2 SDL2_image SDL2_ttf SDL2_mixer`
 
-BIN=death
+BIN=death$(BIN_EXT)
 BUILD_DIR=build
 ASSETS_DIR=assets
 
@@ -17,12 +18,12 @@ game: $(BIN) $(PNG)
 
 $(BIN): $(OBJ)
 	mkdir -p $(@D)
-	$(CXX) $(CXX_FLAGS) $(LIBS) $^ -o $@
+	$(CXX) $^ -o $@ $(CXX_FLAGS) $(LIBS)
 -include $(DEP)
 
 $(BUILD_DIR)/%.o: %.cc
 	mkdir -p $(@D)
-	$(CXX) $(CXX_FLAGS) -MMD -c $< -o $@
+	$(CXX) -MMD -c $< -o $@ $(CXX_FLAGS)
 
 run:
 	./$(BIN)
